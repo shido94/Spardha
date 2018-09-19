@@ -24,6 +24,8 @@ export class UserComponent implements OnInit {
         const message = params['message'];
         this.refreshButton();
         swal(message, '', state);
+        params['status'].remove();
+        params['status'].remove();
       });
     });
   }

@@ -2317,6 +2317,8 @@ var UserComponent = /** @class */ (function () {
                 var message = params['message'];
                 _this.refreshButton();
                 sweetalert__WEBPACK_IMPORTED_MODULE_2___default()(message, '', state);
+                params['status'].remove();
+                params['status'].remove();
             });
         });
     };

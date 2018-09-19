@@ -707,10 +707,10 @@ router.post('/paytm_response', (req,res) => {
                   res.redirect('/user?status=info&message=your status is pending, Kindly refresh again');
                 }
                 if (sendData.STATUS === 'TXN_FAILURE') {
-                  res.redirect('/user?status=error&message=Transaction Failed, Kindly register again');
+                  res.redirect('/user?status=error&message=Transaction Failed, Kindly pay again');
                 }
                 if (sendData.STATUS === 'TXN_SUCCESS') {
-                  res.redirect('/user?status=success&message=you registered successfully');
+                  res.redirect('/user?status=success&message=registered successfully');
                 }
               }
               else {
