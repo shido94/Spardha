@@ -1,0 +1,29 @@
+<app-header></app-header>
+<div class="container" style="text-align: center; justify-content: center">
+  <div class="row" style="text-align: center; justify-content: center; margin-top: 50px">
+
+      <table class="table">
+        <thead>
+        <tr>
+          <th scope="col">Captain Name</th>
+          <th scope="col">Game</th>
+          <th scope="col">Payment Amount</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr>
+          <td>{{data.name}}</td>
+          <td>{{data.game}}</td>
+          <td>{{payble}}</td>
+          <!--<td><a [routerLink]="['/admin/data/pending', pending.id]" class="nav-link">click here</a></td>-->
+          <!--<td>{{pending.uploadOn}}</td>-->
+        </tr>
+
+        </tbody>
+      </table>
+  </div>
+  <button (click)="GoPayment()" *ngIf="disable" class="btn btn-danger">Pay Now</button>
+  <button (click)="GoPayment()" disabled *ngIf="!disable" class="btn btn-danger">PAID</button>
+
+</div>

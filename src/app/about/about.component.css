@@ -1,0 +1,24 @@
+
+#color{
+  background-color: #B58096;
+  background-image: url("../../assets/images/run.png");
+  /*Full height */
+  height: auto;
+  /*Center and scale the image nicely*/
+  background-size: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.row{
+  font-size: 1.5em;
+}
+
+/*#color{*/
+  /*background: url("../../assets/images/run.png") no-repeat center center fixed;*/
+  /*-webkit-background-size: cover;*/
+  /*-moz-background-size: cover;*/
+  /*-o-background-size: cover;*/
+  /*background-size: cover;*/
+/*}*/

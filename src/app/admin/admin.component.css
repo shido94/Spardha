@@ -1,0 +1,44 @@
+
+.card{
+  width: 40%;
+  margin: 10% 30%;
+}
+
+.card-body{
+  justify-content: center;
+}
+
+.form-group label{
+  margin-right: 20px;
+}
+
+label{
+  color: #353535;
+}
+
+
+@media only screen and (min-width : 980px) and (max-width : 990px){
+  .innerText #help{
+    width: 100%;
+    font-size: 5em;
+    color: white;
+    margin-top: -50px;
+    font-family: 'Cinzel', serif;
+  }
+}
+
+
+@media only screen and (min-width : 564px) and (max-width : 979px){
+  .card{
+    width: 80%;
+    margin: 10% 0 5% 10%;
+  }
+}
+
+@media only screen and (min-width : 301px) and (max-width : 563px) {
+  .card{
+    width: 80%;
+    margin: 10% 0 5% 10%;
+  }
+}
+

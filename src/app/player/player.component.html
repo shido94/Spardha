@@ -1,0 +1,71 @@
+<app-header></app-header>
+<div class="container">
+
+
+  <div class="row">
+    <div class="col-sm-8">
+      <div class="card">
+        <div class="card-header" style="color: #ffffff; background-color: #906678">
+          Add Team Member to the Game (*If any)
+        </div>
+        <div class="card-body">
+          <form [formGroup]="invoiceForm" (ngSubmit)="OnUpload(invoiceForm.value)">
+            <div formArrayName="itemRows">
+              <!-- Check the correct way to iterate your form array -->
+              <div *ngFor="let itemrow of invoiceForm.controls.itemRows.controls; let i=index"  [formGroupName]="i">
+                <h4>Member #{{ i + 1 }}</h4>
+                <!--<div class="form-group">-->
+                  <!--<label>Name</label>-->
+                  <!--<input formControlName="name" value="{{data.title}}"  class="form-control">-->
+                <!--</div>-->
+                <!--<div class="form-group">-->
+                  <!--<label>Year <span style="color: red;">*</span></label>-->
+                  <!--<select class="form-control"  formControlName="year">-->
+                    <!--<option value="4">4 th</option>-->
+                    <!--<option value="3">3 rd</option>-->
+                    <!--<option value="2">2 nd</option>-->
+                  <!--</select>-->
+                <!--</div>-->
+                <div class="form-group">
+                  <label>Library Id</label>
+                  <input formControlName="libId" required  class="form-control">
+                </div>
+                <!--<div class="form-group">-->
+                  <!--<label>Roll number</label>-->
+                  <!--<input formControlName="rollNumber" class="form-control">-->
+                <!--</div>-->
+                <div style="margin-bottom: 10px; text-align: right; justify-content: right">
+                  <button *ngIf="invoiceForm.controls.itemRows.controls.length > 1" (click)="deleteRow(i)" class="btn btn-danger">Delete Member</button>
+                </div>
+              </div>
+            </div>
+            <button type="button" (click)="addNewRow()" class="btn btn-primary">Add new Member</button>
+            <br>
+            <div class="form-group">
+              <span *ngIf="err" style="color: red">{{'*'+error}}</span>
+            </div>
+            <hr>
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <span>( Also Click on Submit If you don't have team)</span>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="card">
+        <!--<div class="card-header" style="color: #ffffff; background-color: #906678">-->
+          <!--Rules of games-->
+        <!--</div>-->
+        <div class="card-body">
+          <p>If you have any problem in the registration process, you can contact to
+            <b>
+              Your respective game Apex
+            </b>
+            or can call at <b>7455969734 (Rupesh yadav)</b>
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

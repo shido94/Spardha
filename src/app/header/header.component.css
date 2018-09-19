@@ -1,0 +1,12 @@
+nav {
+  background-color: #906678;
+  color: white;
+}
+
+.nav-link, a {
+  color: white;
+}
+
+.nav-item{
+  margin-right: 15px;
+}

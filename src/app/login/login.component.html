@@ -1,0 +1,49 @@
+<a id="clickme" class="nav-link" routerLink="#" style="color: #906678; background-color: #ffffff; border-radius: 15px;">
+  Status
+</a>
+
+
+<div id="myModal" class="modal">
+  <!-- Modal content -->
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>Spardha</h3>
+    </div>
+    <div class="container">
+      <div class="modal-body">
+        <h4>Check Status</h4>
+        <form method="post" [formGroup]="loginForm" (submit)="onLogin()">
+
+          <div class="form-group">
+            <label for="email">Library Id</label>
+            <input type="text" required class="form-control" [formControl]="libControl" id="email" aria-describedby="emailHelp" placeholder="college library ID">
+          </div>
+          <div class="form-group">
+            <label>Games <span style="color: red;">*</span></label>
+            <select class="form-control"  [formControl]="gameControl">
+              <option value="cricket">Cricket</option>
+              <option value="football">Football</option>
+              <option value="volleyball">VolleyBall</option>
+              <option value="basket-ball">Basket Ball</option>
+              <option value="table-tennis">Table tennis</option>
+              <option value="chess">Chess</option>
+              <option value="carrom">Carrom</option>
+              <option value="pool">Pool Game</option>
+              <option value="lawn-tennis">Lawn tennis</option>
+              <option value="athletics">Athletics</option>
+              <option value="badminton">Badminton</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <span *ngIf="err" style="color: red">{{'*'+error}}</span>
+          </div>
+          <div class="form-group">
+            <span style="color: red">Only for Team captain</span>
+          </div>
+
+          <button type="submit" [disabled]="loginForm.invalid" class="btn btn-primary">Login</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

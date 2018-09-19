@@ -1,0 +1,43 @@
+<app-header></app-header>
+
+<div style="text-align: center; margin-top: 10px">
+  <h4>Your registered team</h4>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="table-responsive">
+
+    <table class="table">
+      <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Captain Name</th>
+        <th scope="col">Game</th>
+        <th scope="col">Team Member</th>
+        <th scope="col">Amount</th>
+        <th scope="col">Check</th>
+        <th scope="col"><button (click)="refreshButton()" class="btn btn-danger">Refresh</button></th>
+      </tr>
+      </thead>
+      <tbody>
+
+      <tr>
+        <th scope="row">--></th>
+        <td>{{names.name}}</td>
+        <td>{{names.game}}</td>
+        <td>{{names.team.length+1}}</td>
+        <td>{{amount}} ({{status}})</td>
+
+        <td *ngIf="!again"><a routerLink="/payment">Pay Again</a></td>
+        <td></td>
+      </tr>
+
+      </tbody>
+    </table>
+    </div>
+  </div>
+  <br>
+  <br>
+  <div><b>Note</b>--> Please Click on refresh button after 2-3 minutes time, If the <b>Payment Status</b> is <b>PENDING</b></div>
+</div>
+

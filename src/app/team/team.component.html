@@ -1,0 +1,82 @@
+<app-header></app-header>
+<div class="container">
+
+
+  <div class="row">
+    <div class="col-sm-8">
+      <div class="card">
+        <div class="card-header" style="color: #ffffff; background-color: #906678">
+          Register to an Event
+        </div>
+        <div class="card-body">
+          <form method="post" [formGroup]="uploadForm" enctype="multipart/form-data" (ngSubmit)="OnUpload(uploadForm.value)" >
+
+            <div class="form-group">
+              <label>Library Id<span style="color: red;">*</span></label>
+              <input type="text"  class="form-control" #sub formControlName="libId" placeholder="college library id">
+            </div>
+            <div class="form-group">
+              <label>Verification Code<span style="color: red;">*</span></label>
+              <input type="text"  class="form-control" #sub formControlName="uniqueId" placeholder="college library id">
+            </div>
+
+            <div class="form-group">
+              <label>Mobile Number<span style="color: red;">*</span></label>
+              <input type="text" class="form-control" #sub formControlName="phone" placeholder="personal mobile number">
+            </div>
+
+            <div class="form-group">
+              <label>Games <span style="color: red;">*</span></label>
+              <select class="form-control"  formControlName="game">
+                <option value="cricket">Cricket</option>
+                <option value="football">Football</option>
+                <option value="volleyball">VolleyBall</option>
+                <option value="basket-ball">Basket Ball</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Name<span style="color: red;">*</span></label>
+              <input type="text" disabled  class="form-control" #sub formControlName="name" value="{{data.Name}}" placeholder="Your full name">
+            </div>
+
+            <div class="form-group">
+              <label>Gender<span style="color: red;">*</span></label>
+              <input type="text" disabled  class="form-control" #sub value="{{data.Gender}}" formControlName="gender" placeholder="personal mobile number">
+            </div>
+
+            <div class="form-group">
+              <label>Select Branch<span style="color: red;">*</span></label>
+              <input type="text" disabled  class="form-control" #sub value="{{data.Dept}}" formControlName="branch" placeholder="Branch">
+            </div>
+
+            <div class="form-group">
+              <label>Year <span style="color: red;">*</span></label>
+              <input type="text" disabled  class="form-control" #sub value="{{data.year}}" formControlName="year" placeholder="Year">
+            </div>
+
+            <div class="form-group">
+              <span *ngIf="err" style="color: red">{{'*'+error}}</span>
+            </div>
+
+            <button type="submit" [disabled]="uploadForm.invalid || !block" class="btn btn-primary">Submit</button>
+            <!--[disabled]="uploadForm.invalid || condition"-->
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="card">
+        <div class="card-body">
+          <p>If you have any problem in the registration process, you can contact to
+            <b>
+              Your respective game Apex
+            </b>
+            or can call at <b>7455969734 (Rupesh yadav)</b>
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

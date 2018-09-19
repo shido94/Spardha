@@ -1,0 +1,29 @@
+<div class="card">
+  <div class="card-header">
+    <h3 style="text-align: center">Generate Unique Key</h3>
+  </div>
+  <div class="card-body">
+    <form method="post" [formGroup]="loginForm"  (submit)='onLogin()'>
+      <div class="form-group">
+        <label for="email">Library ID</label>
+        <input type="text" [formControl]="libControl" class="form-control" id="email" placeholder="Enter library ID">
+      </div>
+      <div class="form-group">
+        <label for="password">Unique ID</label>
+        <input type="text" [formControl]="uniqueControl" class="form-control" id="password" placeholder="enter unique code">
+      </div>
+
+      <div class="form-group">
+        <label>Games <span style="color: red;">*</span></label>
+        <select class="form-control"  [formControl]="gamesControl">
+          <option value="cricket">Cricket</option>
+          <option value="football">Football</option>
+          <option value="volleyball">VolleyBall</option>
+          <option value="basket-ball">Basket Ball</option>
+        </select>
+      </div>
+
+      <button type="submit" [disabled]="" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+</div>
