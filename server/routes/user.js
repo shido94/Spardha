@@ -16,7 +16,7 @@ const Payment = require('../model/payment');
 
 const APP_KEY = 'SPORTS_18_SJSHUU';
 var CUST_ID = '';
-var TXN_AMOUNT = 70;
+const TXN_AMOUNT = 70;
 
 
 mongoose.Promise = Promise;
@@ -663,9 +663,9 @@ router.get('/approval-list', checkAuth, (req,res) => {
 router.get('/paytm_data', (req,res) => {
   const obj = req.query.amount;
   const paytm = JSON.parse(obj);
-  TXN_AMOUNT =  paytm.TXN_AMOUNT - 1.22;
+  const reduced_amount = 68.78;
   const url = 'https://www.kiet.edu/erp-apis/index.php/payment/do_transaction?APP_KEY='+APP_KEY
-    +'&CUST_ID='+paytm.CUST_ID+'&TXN_AMOUNT='+TXN_AMOUNT+'&CALLBACK_URL=http://sportsfest.kiet.edu/user/paytm_response';
+    +'&CUST_ID='+paytm.CUST_ID+'&TXN_AMOUNT='+reduced_amount+'&CALLBACK_URL=http://sportsfest.kiet.edu/user/paytm_response';
 
   res.redirect(url);
 });
