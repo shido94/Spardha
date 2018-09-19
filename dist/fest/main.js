@@ -2268,7 +2268,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<app-header></app-header>\n\n<div style=\"text-align: center; margin-top: 10px\">\n  <h4>Your registered team</h4>\n</div>\n<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"table-responsive\">\n\n    <table class=\"table\">\n      <thead>\n      <tr>\n        <th scope=\"col\">#</th>\n        <th scope=\"col\">Captain Name</th>\n        <th scope=\"col\">Game</th>\n        <th scope=\"col\">Team Member</th>\n        <th scope=\"col\">Amount</th>\n        <th scope=\"col\">Check</th>\n        <th scope=\"col\"><button (click)=\"refreshButton()\" class=\"btn btn-danger\">Refresh</button></th>\n      </tr>\n      </thead>\n      <tbody>\n\n      <tr>\n        <th scope=\"row\">--></th>\n        <td>{{names.name}}</td>\n        <td>{{names.game}}</td>\n        <td>{{names.team.length+1}}</td>\n        <td>{{amount}} ({{status}})</td>\n\n        <td *ngIf=\"!again\"><a routerLink=\"/payment\">Pay Again</a></td>\n        <td></td>\n      </tr>\n\n      </tbody>\n    </table>\n    </div>\n  </div>\n  <br>\n  <br>\n  <div><b>Note</b>--> Please Click on refresh button after 2-3 minutes time, If the <b>Payment Status</b> is <b>PENDING</b></div>\n</div>\n\n"
+module.exports = "<app-header></app-header>\n\n<div style=\"text-align: center; margin-top: 10px\">\n  <h4>Your registered team</h4>\n</div>\n<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"table-responsive\">\n\n    <table class=\"table\">\n      <thead>\n      <tr>\n        <th scope=\"col\">#</th>\n        <th scope=\"col\">Captain Name</th>\n        <th scope=\"col\">Game</th>\n        <th scope=\"col\">Team Member</th>\n        <th scope=\"col\">Amount</th>\n        <th scope=\"col\">Check</th>\n        <th scope=\"col\"><button (click)=\"refreshButton()\" class=\"btn btn-danger\">Refresh</button></th>\n      </tr>\n      </thead>\n      <tbody>\n\n      <tr>\n        <th scope=\"row\">--></th>\n        <td>{{names.name}}</td>\n        <td>{{names.game}}</td>\n        <td>{{names.team.length+1}}</td>\n        <td>{{status}}</td>\n\n        <td *ngIf=\"!again\"><a routerLink=\"/payment\">Pay Again</a></td>\n        <td></td>\n      </tr>\n\n      </tbody>\n    </table>\n    </div>\n  </div>\n  <br>\n  <br>\n  <div><b>Note</b>--> Please Click on refresh button after 2-3 minutes time, If the <b>Payment Status</b> is <b>PENDING</b></div>\n</div>\n\n"
 
 /***/ }),
 
@@ -2315,35 +2315,6 @@ var UserComponent = /** @class */ (function () {
             _this.route.queryParams.subscribe(function (params) {
                 var state = params['status'];
                 var message = params['message'];
-                var amounts = Number(data.amount);
-                // this.CUST_ID = data._id;
-                // this.names = data.data;
-                // console.log('failu --> ', this.status);
-                // if (data.status === 'TXN_FAILURE') {
-                //   this.again = false;
-                //   this.amount = amounts;
-                //   this.status = 'UNPAID';
-                // }
-                //
-                // if (data.status === 'TXN_SUCCESS') {
-                //   this.again = true;
-                //   if (amounts >= 68) {
-                //     this.status = 'PAID';
-                //     this.amount = amounts;
-                //   } else {
-                //     this.again = false;
-                //     this.status = 'UNPAID';
-                //     this.amount = amounts;
-                //   }
-                // }
-                //
-                // if (data.status === 'PENDING') {
-                //   this.again = true;
-                //   this.status = 'PENDING';
-                // } else {
-                //   this.again = true;
-                //   this.status = data.status;
-                // }
                 _this.refreshButton();
                 sweetalert__WEBPACK_IMPORTED_MODULE_2___default()(message, '', state);
             });
@@ -2357,7 +2328,6 @@ var UserComponent = /** @class */ (function () {
             var amounts = Number(result.amount);
             _this.CUST_ID = result._id;
             _this.names = result.data;
-            console.log('failu --> ', result.status);
             if (result.status === 'TXN_FAILURE') {
                 _this.again = false;
                 _this.amount = amounts;
