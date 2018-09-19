@@ -660,7 +660,7 @@ router.get('/approval-list', checkAuth, (req,res) => {
     });
 });
 
-router.get('/paytm_data', checkAuth, (req,res) => {
+router.get('/paytm_data', (req,res) => {
   const obj = req.query.amount;
   const paytm = JSON.parse(obj);
   TXN_AMOUNT =  paytm.TXN_AMOUNT - 1.22;
