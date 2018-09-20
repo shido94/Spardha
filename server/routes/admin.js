@@ -19,8 +19,8 @@ const Payment = require('../model/payment');
 const csv = require('fast-csv');
 
 
-var admin_login = 'KIET123';
-var admin_pass = 'KIET2K18';
+const admin_login = 'KIET123';
+const admin_pass = 'KIET2K18';
 
 router.post('/login', (req,res) => {
   if(req.body.email === admin_login && req.body.password === admin_pass) {
@@ -108,14 +108,28 @@ router.post('/details', checkAuth , (req,res) => {
                       .then(value => {
 
                         const status = value.data.STATUS;
-                        array.push(status);
-                        if(array.length === captain.captainId.length){
-                          console.log('array --> ',array);
-                          res.status(200).json({
-                            success: true,
-                            data: captain,
-                            status: array
-                          });
+                        const amount = value.data.TXN_AMOUNT;
+                        if (amount >= 68) {
+                          array.push(status);
+                          if (array.length === captain.captainId.length) {
+                            console.log('array --> ', array);
+                            res.status(200).json({
+                              success: true,
+                              data: captain,
+                              status: array
+                            });
+                          }
+                        }
+                        else {
+                          array.push("TXN_FAILURE");
+                          if (array.length === captain.captainId.length) {
+                            console.log('array --> ', array);
+                            res.status(200).json({
+                              success: true,
+                              data: captain,
+                              status: array
+                            });
+                          }
                         }
                       });
                   }

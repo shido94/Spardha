@@ -34,6 +34,8 @@ const Game = require('../model/games');
 
 router.post('/register', (req,res) => {
   const game = req.body;
+  const upper = game.libId.toUpperCase();
+  game.libId = upper;
 
 
   if (game.type === 'team') {
@@ -495,13 +497,13 @@ router.get('/keys', checkAuth, (req,res) => {
 
   Captain.findOne({_id: req.userData.userId}, 'name team game type payment_status')
         .then(result => {
-
+          let last_id;
           if (result.payment_status.length) {
             const length = result.payment_status.length;
-            var last_id = result.payment_status[length - 1];
+            last_id = result.payment_status[length - 1];
           }
           else {
-            var last_id = null;
+            last_id = null;
           }
 
           Payment.findOne({_id: last_id})
@@ -584,6 +586,8 @@ router.post('/add-captain', (req,res) => {
 });
 
 router.post('/login', (req,res) => {
+  const upper = req.body.libId.toUpperCase();
+  req.body.libId = upper;
   Captain.findOne({libId: req.body.libId, game: req.body.game})
     .then(team => {
       if (team) {
@@ -617,13 +621,13 @@ router.post('/login', (req,res) => {
 router.get('/approval-list', checkAuth, (req,res) => {
   Captain.findOne({_id: req.userData.userId},'name team game type payment_status')
     .then(result => {
-
+      let last_id;
       if(result.payment_status.length) {
         const length = result.payment_status.length;
-        var last_id = result.payment_status[length - 1];
+        last_id = result.payment_status[length - 1];
       }
       else{
-        var last_id = null;
+        last_id = null;
       }
 
 
@@ -732,13 +736,13 @@ router.post('/paytm_response', (req,res) => {
 router.post('/refresh-event',checkAuth , (req,res) => {
   Captain.findOne({_id: req.userData.userId},'name team game type payment_status')
     .then(result => {
-
+      let last_id;
       if(result.payment_status.length) {
         const length = result.payment_status.length;
-        var last_id = result.payment_status[length - 1];
+        last_id = result.payment_status[length - 1];
       }
       else{
-        var last_id = null;
+        last_id = null;
       }
 
       Payment.findOne({_id: last_id})
