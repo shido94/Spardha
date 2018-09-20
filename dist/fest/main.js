@@ -184,7 +184,7 @@ module.exports = "nav {\n  background-color: #906678;\n  color: white;\n}\n\n.na
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\n\n<nav class=\"navbar navbar-expand-lg \">\n  <a style=\"margin-left: 20px\" class=\"navbar-brand\" routerLink=\"\"><b>Spardha</b></a>\n  <span class=\"flex\" style=\"flex-grow: 1\"></span>\n  <button class=\"navbar-toggler\" style=\"color: white;\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarSupportedContent\" aria-controls=\"navbarSupportedContent\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\n    <span class=\"navbar-toggler-icon\" style=\"margin-right: 10px; text-align: center\">\n      <i class=\"material-icons\">\n        menu\n      </i>\n    </span>\n  </button>\n  <div class=\"collapse navbar-collapse\" id=\"navbarSupportedContent\">\n    <ul class=\"navbar-nav mr-auto\">\n      <li class=\"nav-item active\">\n        <a class=\"nav-link\" routerLink=\"/admin/home\"><b>Home</b><span class=\"sr-only\">(current)</span></a>\n      </li>\n      <li class=\"nav-item active\">\n        <a class=\"nav-link\" routerLink=\"/admin/captain-list\"><b>List</b></a>\n      </li>\n      <span style=\"margin-left: 300%\"></span>\n      <div class=\"right\" style=\"text-align: right; justify-content: right; display: flex\">\n        <li class=\"nav-item\" *ngIf=\"!login\">\n          <a class=\"nav-link\">\n            <app-login></app-login>\n          </a>\n        </li>\n        <li class=\"nav-item\" *ngIf=\"login\">\n          <a class=\"nav-link\" (click)=\"logout()\" href=\"/admin/login\"><b>Logout</b></a>\n        </li>\n      </div>\n    </ul>\n  </div>\n</nav>\n\n"
+module.exports = "\n\n<nav class=\"navbar navbar-expand-lg \">\n  <a style=\"margin-left: 20px\" class=\"navbar-brand\" routerLink=\"\"><b>Spardha</b></a>\n  <span class=\"flex\" style=\"flex-grow: 1\"></span>\n  <button class=\"navbar-toggler\" style=\"color: white;\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarSupportedContent\" aria-controls=\"navbarSupportedContent\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\n    <span class=\"navbar-toggler-icon\" style=\"margin-right: 10px; text-align: center\">\n      <i class=\"material-icons\">\n        menu\n      </i>\n    </span>\n  </button>\n  <div class=\"collapse navbar-collapse\" id=\"navbarSupportedContent\">\n    <ul class=\"navbar-nav mr-auto\">\n      <li class=\"nav-item active\">\n        <a class=\"nav-link\" routerLink=\"/admin/home\"><b>Home</b><span class=\"sr-only\">(current)</span></a>\n      </li>\n      <li class=\"nav-item active\">\n        <a class=\"nav-link\" routerLink=\"/admin/captain-list\"><b>List</b></a>\n      </li>\n      <span style=\"margin-left: 200%\"></span>\n      <div class=\"right\" style=\"text-align: right; justify-content: right; display: flex\">\n        <li class=\"nav-item\" *ngIf=\"!login\">\n          <a class=\"nav-link\">\n            <app-login></app-login>\n          </a>\n        </li>\n        <li class=\"nav-item\" *ngIf=\"login\">\n          <a class=\"nav-link\" (click)=\"logout()\" href=\"/admin/login\"><b>Logout</b></a>\n        </li>\n      </div>\n    </ul>\n  </div>\n</nav>\n\n"
 
 /***/ }),
 
@@ -2413,9 +2413,6 @@ var UserComponent = /** @class */ (function () {
             _this.names = result.data;
             _this.status = result.status;
             _this.amount = result.amount;
-            console.log('names --> ', _this.names);
-            console.log('names --> ', _this.status);
-            console.log('names --> ', _this.amount);
         });
     };
     UserComponent.prototype.payAmount = function () {

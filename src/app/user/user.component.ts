@@ -32,10 +32,6 @@ export class UserComponent implements OnInit {
       this.names = result.data;
       this.status = result.status;
       this.amount = result.amount;
-      console.log('names --> ', this.names);
-      console.log('names --> ', this.status);
-      console.log('names --> ', this.amount);
-
     });
   }
 

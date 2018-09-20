@@ -51,7 +51,7 @@ app.get('/submit', (req,res) => {
 
 
 // Server connection API
-//
+
 // const server = http.createServer(app);
 // mongoose.connect('mongodb://localhost:27017/fest',{ useNewUrlParser: true });
 // const db = mongoose.connection;
@@ -63,6 +63,7 @@ app.get('/submit', (req,res) => {
 //   });
 // });
 
+
 const server = http.createServer(app);
 mongoose.connect('mongodb://localhost:27017/fest',{ useNewUrlParser: true });
 const db = mongoose.connection;
@@ -71,5 +72,5 @@ db.once('open', function() {
   // we're connected!
   server.listen(1337,"0.0.0.0");
 });
-//
-//
+
+
