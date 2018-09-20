@@ -87,14 +87,18 @@ router.post('/details', checkAuth , (req,res) => {
           Captain.findOne({_id: captains._id},'name team game type payment_status')
             .then(result => {
               let last_id;
+              console.log('length --> ', result.payment_status.length);
               if (result.payment_status.length) {
+                console.log('reachxessesf');
                 const length = result.payment_status.length;
                 last_id = result.payment_status[length - 1];
               }
               else {
+                console.log('reach');
                 last_id = null;
               }
 
+              console.log('lstID --> ', last_id);
               Payment.findOne({_id: last_id})
                 .then(pay => {
                   if (pay) {
