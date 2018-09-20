@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 
 const jwt = require('jsonwebtoken');
 mongoose.Promise = Promise;
+const axios = require('axios');
 
 const async = require('async');
 
