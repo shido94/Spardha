@@ -31,6 +31,7 @@ const Captain = require('../model/registration');
 const AddCaptain = require('../model/captain');
 const Game = require('../model/games');
 
+
 router.post('/register', (req,res) => {
   const game = req.body;
 

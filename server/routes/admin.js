@@ -86,13 +86,13 @@ router.post('/details', checkAuth , (req,res) => {
         for(let captains of captain.captainId) {
           Captain.findOne({_id: captains._id},'name team game type payment_status')
             .then(result => {
-
+              let last_id;
               if (result.payment_status.length) {
                 const length = result.payment_status.length;
-                var last_id = result.payment_status[length - 1];
+                last_id = result.payment_status[length - 1];
               }
               else {
-                var last_id = null;
+                last_id = null;
               }
 
               Payment.findOne({_id: last_id})
