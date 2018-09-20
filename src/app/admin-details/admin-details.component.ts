@@ -9,7 +9,7 @@ import {UserService} from '../services/user.service';
 })
 export class AdminDetailsComponent implements OnInit {
   collections = [];
-
+  status = [];
   constructor(private route: ActivatedRoute, private userService: UserService) { }
 
   ngOnInit() {
@@ -17,6 +17,8 @@ export class AdminDetailsComponent implements OnInit {
       const details$ = this.userService.getDetails(params['id']);
       details$.subscribe(result => {
         this.collections = result.data.captainId;
+        this.status = result.status;
+        console.log(this.status);
       });
     });
   }
