@@ -20,7 +20,7 @@ const Payment = require('../model/payment');
 const csv = require('fast-csv');
 
 
-var admin_login = 'spardha';
+var admin_login = 'KIET123';
 var admin_pass = 'KIET2K18';
 
 router.post('/login', (req,res) => {
