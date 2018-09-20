@@ -13,7 +13,6 @@ const async = require('async');
 const process = require('../../keys/jwt');
 const checkAuth = require('../middleware/check-auth');
 
-
 const Captain = require('../model/registration');
 const Game = require('../model/games');
 const Payment = require('../model/payment');
