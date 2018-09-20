@@ -113,7 +113,6 @@ router.post('/details', checkAuth , (req,res) => {
                             status: array
                           });
                         }
-
                       });
                   }
                   else {
