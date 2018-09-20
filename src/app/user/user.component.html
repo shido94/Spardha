@@ -30,13 +30,13 @@
         <td *ngIf="name.type === 'team'"></td>
         <td *ngIf="status[i] === 'TXN_FAILURE' && name.type === 'individual'">UNPAID</td>
         <td *ngIf="status[i] === 'PENDING' && name.type === 'individual'">PENDING</td>
-        <td *ngIf="status[i] === 'TXN_SUCCESS' && amount[i] > 68 && name.type === 'individual'">PAID</td>
+        <td *ngIf="status[i] === 'TXN_SUCCESS' && amount[i] >= 68 && name.type === 'individual'">PAID</td>
         <td *ngIf="status[i] === 'TXN_SUCCESS' && amount[i] < 68 && name.type === 'individual'">UNPAID</td>
 
         <td *ngIf="name.type === 'team'"></td>
         <td *ngIf="status[i] === 'TXN_FAILURE' && name.type === 'individual'"><a  [routerLink]="['/payment', name._id]">Pay Again</a></td>
         <td *ngIf="status[i] === 'PENDING' && name.type === 'individual'"><a (click)="refreshButton()" routerLink="#">Refresh</a></td>
-        <td *ngIf="status[i] === 'TXN_SUCCESS' && amount[i] > 68 && name.type === 'individual'"></td>
+        <td *ngIf="status[i] === 'TXN_SUCCESS' && amount[i] >= 68 && name.type === 'individual'"></td>
         <td *ngIf="status[i] === 'TXN_SUCCESS' && amount[i] < 68 && name.type === 'individual'"><a  [routerLink]="['/payment', name._id]">Pay Again</a></td>
 
       </tr>
