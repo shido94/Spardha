@@ -21,6 +21,7 @@
               <th scope="col"><b>Branch</b></th>
               <th scope="col"><b>Library Id</b></th>
               <th scope="col"><b>Year</b></th>
+              <th scope="col"><b>Contact</b></th>
               <th scope="col"><b>Role</b></th>
             </tr>
             </thead>
@@ -32,6 +33,7 @@
               <td>{{captain.branch}}</td>
               <td>{{captain.libId}}</td>
               <td>{{captain.year}}</td>
+              <td>{{captain.phone}}</td>
               <td>{{captain.role}}</td>
             </tr>
             <tr *ngFor="let player of captain.team; let j = index">
@@ -40,6 +42,7 @@
               <td>{{player.branch}}</td>
               <td>{{player.libId}}</td>
               <td>{{player.year}}</td>
+              <td></td>
               <td>{{player.role}}</td>
             </tr>
 
