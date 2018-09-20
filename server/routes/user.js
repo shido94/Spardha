@@ -684,7 +684,7 @@ router.post('/paytm_response', (req,res) => {
         STATUS: result.data.STATUS,
         REGISTRATION_ID: paytmData.CUST_ID,
       };
-
+      console.log("sendData --> ", sendData);
       const payment = new Payment(sendData);
       payment.save((err, done) => {
         if (err) {
