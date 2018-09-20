@@ -955,6 +955,8 @@ router.post('/refresh-event',checkAuth , (req,res) => {
                           const amountInt = parseInt(value.data.TXNAMOUNT);
                           amountArray.push(amountInt);
                           if(refreshArray.length === result.length) {
+                            console.log('status-- > ', status);
+                            console.log('amountArray-- > ', amountArray);
                             return res.status(200).json({
                               success: true,
                               data: result,
@@ -979,6 +981,8 @@ router.post('/refresh-event',checkAuth , (req,res) => {
               refreshArray.push(status);
               amountArray.push(1);
               if(refreshArray.length === result.length) {
+                console.log('statusArray-- > ', status);
+                console.log('amount-- > ', amountArray);
                 return res.status(200).json({
                   success: true,
                   data: result,
