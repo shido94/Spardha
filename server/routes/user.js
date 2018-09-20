@@ -671,6 +671,7 @@ router.get('/paytm_data', (req,res) => {
 });
 
 router.post('/paytm_response', (req,res) => {
+  console.log("userData --> ", req.userData);
   const paytmData = req.body;
   console.log('paytmData -->>  ',paytmData);
   const url = 'https://www.kiet.edu/erp-apis/index.php/payment/order_status/' + paytmData.ORDERID;

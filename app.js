@@ -49,6 +49,7 @@ app.get('/submit', (req,res) => {
   console.log(req.session.firstName);
 });
 
+
 // Server connection API
 
 // const server = http.createServer(app);
