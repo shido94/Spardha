@@ -33,6 +33,7 @@ import { FailedComponent } from './failed/failed.component';
 import { IndividualPlayerComponent } from './individual-player/individual-player.component';
 import { PaymentResponseComponent } from './payment-response/payment-response.component';
 import { CaptainIdComponent } from './captain-id/captain-id.component';
+import { CaptainListComponent } from './captain-list/captain-list.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { CaptainIdComponent } from './captain-id/captain-id.component';
     FailedComponent,
     IndividualPlayerComponent,
     PaymentResponseComponent,
-    CaptainIdComponent
+    CaptainIdComponent,
+    CaptainListComponent
   ],
   imports: [
     BrowserModule,
