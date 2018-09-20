@@ -677,7 +677,6 @@ router.post('/paytm_response', (req,res) => {
 
   axios.get(url)
     .then(result => {
-
       const sendData = {
         ORDERID: paytmData.ORDERID,
         TXNAMOUNT: result.data.TXNAMOUNT,
