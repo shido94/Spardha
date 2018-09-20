@@ -59,7 +59,7 @@ export class PlayerComponent implements OnInit {
           this.router.navigate(['/next']);
         } else {
           swal('Team has been registered successfully, Now go to payment page', '' , 'success');
-          this.router.navigate(['payment']);
+          this.router.navigate(['/payment', data.id]);
         }
       } else {
         this.err = true;

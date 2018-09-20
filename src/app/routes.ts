@@ -17,6 +17,7 @@ import {AuthGuard} from './guard/auth.guard';
 import {FailedComponent} from './failed/failed.component';
 import {PaymentResponseComponent} from './payment-response/payment-response.component';
 import {CaptainIdComponent} from './captain-id/captain-id.component';
+import {CaptainListComponent} from './captain-list/captain-list.component';
 
 
 export const myRoutes: Routes = [
@@ -50,7 +51,7 @@ export const myRoutes: Routes = [
     component: PlayerComponent
   },
   {
-    path: 'payment',
+    path: 'payment/:id',
     canActivate: [AuthGuard],
     component: PaymentComponent
   },
@@ -98,5 +99,10 @@ export const myRoutes: Routes = [
   {
     path: 'captain/unique/id',
     component: CaptainIdComponent
+  },
+  {
+    path: 'captain-list',
+    canActivate: [AuthGuard],
+    component: CaptainListComponent
   }
 ];

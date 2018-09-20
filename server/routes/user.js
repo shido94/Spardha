@@ -15,9 +15,8 @@ const captainAuth = require('../model/captain');
 const Payment = require('../model/payment');
 
 const APP_KEY = 'SPORTS_18_SJSHUU';
-var CUST_ID = '';
+// var CUST_ID = '';
 const TXN_AMOUNT = 70;
-
 
 mongoose.Promise = Promise;
 
@@ -31,6 +30,8 @@ const Captain = require('../model/registration');
 const AddCaptain = require('../model/captain');
 const Game = require('../model/games');
 
+
+// for testting
 
 router.post('/register', (req,res) => {
   const game = req.body;
@@ -101,56 +102,41 @@ router.post('/register', (req,res) => {
         throw new error
       });
   }
-  else{
+  else {
 
-    if(game.name) {
-      Captain.findOne({libId: game.libId, game: game.game})
-        .then(result => {
-          if(result){
-            return res.status(200).json({
-              success: false,
-              message: 'Player has already registered in same event'
+    if (game.name) {
+      const captain = new Captain(game);
+      captain.save((err, result) => {
+        if (err) {
+          console.log(err);
+          throw err;
+        }
+        else {
+          // const game = new Game();
+          Game.updateOne({name: result.game}, {
+            $push: {
+              captainId: result._id
+            }
+          }, (errors, update) => {
+            const token = jwt.sign({
+                libId: result.libId,
+                userId: result._id,
+                game: result.game,
+                type: 'individual'
+              }, process.env.JWT_KEYS,
+              {
+                expiresIn: "5 days"
+              });
+            res.status(200).json({
+              success: true,
+              token: token,
+              message: 'successfully registered'
             });
-          }
-          else{
-            const captain = new Captain(game);
-            captain.save((err,result) => {
-              if(err){
-                console.log(err);
-                throw err;
-              }
-              else{
-                // const game = new Game();
-                Game.updateOne({name: result.game}, {
-                  $push: {
-                    captainId: result._id
-                  }
-                }, (errors, update) => {
-                  const token = jwt.sign({
-                      libId: result.libId,
-                      userId: result._id,
-                      game: result.game,
-                      type: 'individual'
-                    }, process.env.JWT_KEYS ,
-                    {
-                      expiresIn: "5 days"
-                    });
-                  res.status(200).json({
-                    success: true,
-                    token: token,
-                    message: 'successfully registered'
-                  });
-                });
-              }
-            });
-          }
-        })
-        .catch(error => {
-          console.log(error);
-          throw new error;
-        });
+          });
+        }
+      });
     }
-    else{
+    else {
       return res.status(200).json({
         success: false,
         message: 'Wrong LibraryID'
@@ -158,6 +144,148 @@ router.post('/register', (req,res) => {
     }
   }
 });
+
+// main wala hai
+
+
+// router.post('/register', (req,res) => {
+//   const game = req.body;
+//   const upper = game.libId.toUpperCase();
+//   game.libId = upper;
+//
+//   console.log(game);
+//
+//   if (game.type === 'team') {
+//
+//     captainAuth.findOne({uniqueId: game.uniqueId, libId: game.libId, game: game.game})
+//       .then(result => {
+//         if (!result){
+//           return res.status(200).json({
+//             success: false,
+//             message: 'Wrong Verification Code or LibraryID'
+//           });
+//         }
+//         else{
+//           Captain.find({libId: game.libId, game: game.game})
+//             .then(captain => {
+//               if(captain.length) {
+//                 return res.status(200).json({
+//                   success: false,
+//                   message: 'This captain is already registered'
+//                 });
+//               }
+//               else{
+//                 const capt = new Captain(game);
+//                 capt.save( (err,done) => {
+//                   if(err){
+//                     console.log(err);
+//                     throw new err
+//                   }
+//                   Game.updateOne({name: done.game}, {
+//                     $push: {
+//                       captainId: done._id
+//                     }
+//                   }, (errors, update) => {
+//                     if(errors) {
+//                       console.log(errors);
+//                       throw errors
+//                     }
+//                     else{
+//                       const token = jwt.sign({
+//                           libId: done.libId,
+//                           userId: done._id,
+//                           branch: done.branch,
+//                           game: done.game,
+//                           type: 'team'
+//                         }, process.env.JWT_KEYS ,
+//                         {
+//                           expiresIn: "5 days"
+//                         });
+//                       res.status(200).json({
+//                         success: true,
+//                         token: token,
+//                         message: 'successfully registered'
+//                       });
+//                     }
+//                   });
+//                 });
+//               }
+//             })
+//         }
+//       })
+//       .catch(error => {
+//         console.log(error);
+//         throw new error
+//       });
+//   }
+//   else{
+//
+//     if(game.name) {
+//       Captain.find({libId: game.libId, game: game.game})
+//         .then(result => {
+//
+//           for(let player of result) {
+//             if(player.team.length === game) {
+//
+//             }
+//             else{
+//
+//             }
+//           }
+//
+//
+//           if(result){
+//             return res.status(200).json({
+//               success: false,
+//               message: 'Player has already registered in same event'
+//             });
+//           }
+//           else{
+//             const captain = new Captain(game);
+//             captain.save((err,result) => {
+//               if(err){
+//                 console.log(err);
+//                 throw err;
+//               }
+//               else{
+//                 // const game = new Game();
+//                 Game.updateOne({name: result.game}, {
+//                   $push: {
+//                     captainId: result._id
+//                   }
+//                 }, (errors, update) => {
+//                   const token = jwt.sign({
+//                       libId: result.libId,
+//                       userId: result._id,
+//                       game: result.game,
+//                       type: 'individual'
+//                     }, process.env.JWT_KEYS ,
+//                     {
+//                       expiresIn: "5 days"
+//                     });
+//                   res.status(200).json({
+//                     success: true,
+//                     token: token,
+//                     message: 'successfully registered'
+//                   });
+//                 });
+//               }
+//             });
+//           }
+//         })
+//         .catch(error => {
+//           console.log(error);
+//           throw new error;
+//         });
+//     }
+//     else{
+//       return res.status(200).json({
+//         success: false,
+//         message: 'Wrong LibraryID'
+//       });
+//     }
+//   }
+// });
 
 router.post('/member', checkAuth , (req,res) => {
   const player = req.body.itemRows;
@@ -175,9 +303,9 @@ router.post('/member', checkAuth , (req,res) => {
     playerId.push(id.libId);
   });
 
-
   if(req.userData.type === 'individual' && playerId[0] == null) {
     return res.status(200).json({
+      id: req.userData.userId,
       success: true,
       type: 'individual',
       message: 'Your have successfully registered'
@@ -300,7 +428,6 @@ router.post('/member', checkAuth , (req,res) => {
                         message: 'Member should be between 11 to 14'
                       });
                     }
-
 
                     // for(let user of playerData) {
                     //   total.push(1);
@@ -466,6 +593,7 @@ router.post('/member', checkAuth , (req,res) => {
                         }
                         else{
                           return res.status(200).json({
+                            id: req.userData.userId,
                             success: true,
                             type: 'individual',
                             message: 'Team has been added successfully'
@@ -493,9 +621,11 @@ router.post('/member', checkAuth , (req,res) => {
 });
 
 router.get('/keys', checkAuth, (req,res) => {
-  CUST_ID = req.userData.userId;
+  const CUST_ID = req.query.id;
+  const userId = CUST_ID;
+  console.log(userId);
 
-  Captain.findOne({_id: req.userData.userId}, 'name team game type payment_status')
+  Captain.findOne({_id: userId}, 'name team game type payment_status')
         .then(result => {
           let last_id;
           if (result.payment_status.length) {
@@ -510,6 +640,7 @@ router.get('/keys', checkAuth, (req,res) => {
             .then(pay => {
               if (pay) {
                 const url = 'https://www.kiet.edu/erp-apis/index.php/payment/order_status/' + pay.ORDERID;
+
 
                 axios.get(url)
                   .then(value => {
@@ -541,6 +672,7 @@ router.get('/keys', checkAuth, (req,res) => {
           console.log(error);
           throw new error;
         });
+
 });
 
 router.post('/add-captain', (req,res) => {
@@ -590,10 +722,11 @@ router.post('/login', (req,res) => {
   req.body.libId = upper;
   Captain.findOne({libId: req.body.libId, game: req.body.game})
     .then(team => {
+      console.log('team --> ', team);
       if (team) {
         const token = jwt.sign({
             libId: req.body.libId,
-            userId: team._id,
+            // userId: team._id,
             game: team.game,
           }, process.env.JWT_KEYS,
           {
@@ -618,53 +751,6 @@ router.post('/login', (req,res) => {
     });
 });
 
-router.get('/approval-list', checkAuth, (req,res) => {
-  Captain.findOne({_id: req.userData.userId},'name team game type payment_status')
-    .then(result => {
-      let last_id;
-      if(result.payment_status.length) {
-        const length = result.payment_status.length;
-        last_id = result.payment_status[length - 1];
-      }
-      else{
-        last_id = null;
-      }
-
-
-      Payment.findOne({_id: last_id})
-        .then(pay => {
-          if(pay) {
-            const status = pay.STATUS;
-
-            return res.status(200).json({
-              success: true,
-              data: result,
-              status: status,
-              amount: pay.TXNAMOUNT
-            });
-          }
-          else{
-            if(result.type === 'team'){
-              var status = 'No payment required';
-            }
-            else{
-              var status = 'TXN_FAILURE';
-            }
-            return res.status(200).json({
-              success: true,
-              data: result,
-              status: status,
-              amount: 1
-            });
-          }
-        });
-    })
-    .catch(error => {
-      console.log(error);
-      throw new error;
-    });
-});
-
 router.get('/paytm_data', (req,res) => {
   const obj = req.query.amount;
   const paytm = JSON.parse(obj);
@@ -676,9 +762,7 @@ router.get('/paytm_data', (req,res) => {
 });
 
 router.post('/paytm_response', (req,res) => {
-  console.log("userData --> ", req.userData);
   const paytmData = req.body;
-  console.log('paytmData -->>  ',paytmData);
   const url = 'https://www.kiet.edu/erp-apis/index.php/payment/order_status/' + paytmData.ORDERID;
 
   axios.get(url)
@@ -689,7 +773,6 @@ router.post('/paytm_response', (req,res) => {
         STATUS: result.data.STATUS,
         REGISTRATION_ID: paytmData.CUST_ID,
       };
-      console.log("sendData --> ", sendData);
       const payment = new Payment(sendData);
       payment.save((err, done) => {
         if (err) {
@@ -707,7 +790,7 @@ router.post('/paytm_response', (req,res) => {
               throw new err;
             }
             else {
-              if (paytmData.TXNAMOUNT >= 68) {
+              if (sendData.TXNAMOUNT >= 68) {
 
                 if (sendData.STATUS === 'PENDING') {
                   res.redirect('/user?status=info&message=your status is pending, Kindly refresh again');
@@ -730,88 +813,210 @@ router.post('/paytm_response', (req,res) => {
     .catch(error => {
       console.log(error);
     });
-
 });
 
+// main wala hai
+
+// router.post('/refresh-event',checkAuth , (req,res) => {
+//   Captain.findOne({_id: req.userData.userId},'name team game type payment_status')
+//     .then(result => {
+//       let last_id;
+//       if(result.payment_status.length) {
+//         const length = result.payment_status.length;
+//         last_id = result.payment_status[length - 1];
+//       }
+//       else{
+//         last_id = null;
+//       }
+//
+//       Payment.findOne({_id: last_id})
+//         .then(pay => {
+//           if (pay) {
+//             const url = 'https://www.kiet.edu/erp-apis/index.php/payment/order_status/' + pay.ORDERID;
+//
+//             axios.get(url)
+//               .then(value => {
+//
+//                 const sendData = {
+//                   ORDERID: value.data.ORDERID,
+//                   TXNAMOUNT: value.data.TXNAMOUNT,
+//                   STATUS: value.data.STATUS,
+//                   REGISTRATION_ID:req.userData.userId
+//                 };
+//
+//                 const payment = new Payment(sendData);
+//                 payment.save((err, done) => {
+//                   if (err) {
+//                     console.log(err);
+//                     throw new err;
+//                   }
+//                   else {
+//                     Captain.updateOne({_id: req.userData.userId}, {
+//                       $push: {
+//                         payment_status: done._id
+//                       }
+//                     }, (err, update) => {
+//                       if (err) {
+//                         console.log(err);
+//                         throw new err;
+//                       }
+//                       else {
+//
+//                         const status = value.data.STATUS;
+//                         return res.status(200).json({
+//                           success: true,
+//                           data: result,
+//                           status: status,
+//                           amount: value.data.TXNAMOUNT
+//                         });
+//
+//                       }
+//                     });
+//                   }
+//                 });
+//               });
+//           }
+//           else {
+//             let status;
+//             if(result.type === 'team'){
+//               status = 'No payment required';
+//             }
+//             else{
+//               status = 'TXN_FAILURE';
+//             }
+//             return res.status(200).json({
+//               success: true,
+//               data: result,
+//               status: status,
+//               amount: 1
+//             });
+//           }
+//         });
+//     })
+//     .catch(error => {
+//       console.log(error);
+//       throw new error;
+//     });
+// });
+
+// for testting
+
 router.post('/refresh-event',checkAuth , (req,res) => {
-  Captain.findOne({_id: req.userData.userId},'name team game type payment_status')
+
+  Captain.find({libId: req.userData.libId, game: req.userData.game},'name team game type payment_status')
     .then(result => {
-      let last_id;
-      if(result.payment_status.length) {
-        const length = result.payment_status.length;
-        last_id = result.payment_status[length - 1];
-      }
-      else{
-        last_id = null;
-      }
+      const refreshArray = [];
+      const amountArray = [];
+      for(let person of result) {
+        let last_id;
+        if(person.payment_status.length) {
+          const length = person.payment_status.length;
+          last_id = person.payment_status[length - 1];
+        }
+        else{
+          last_id = null;
+        }
 
-      Payment.findOne({_id: last_id})
-        .then(pay => {
-          if (pay) {
-            const url = 'https://www.kiet.edu/erp-apis/index.php/payment/order_status/' + pay.ORDERID;
+        Payment.findOne({_id: last_id})
+          .then(pay => {
+            if (pay) {
+              const url = 'https://www.kiet.edu/erp-apis/index.php/payment/order_status/' + pay.ORDERID;
 
-            axios.get(url)
-              .then(value => {
+              axios.get(url)
+                .then(value => {
 
-                const sendData = {
-                  ORDERID: value.data.ORDERID,
-                  TXNAMOUNT: value.data.TXNAMOUNT,
-                  STATUS: value.data.STATUS,
-                  REGISTRATION_ID:req.userData.userId
-                };
+                  const sendData = {
+                    ORDERID: value.data.ORDERID,
+                    TXNAMOUNT: value.data.TXNAMOUNT,
+                    STATUS: value.data.STATUS,
+                    REGISTRATION_ID: person._id
+                  };
 
-                const payment = new Payment(sendData);
-                payment.save((err, done) => {
-                  if (err) {
-                    console.log(err);
-                    throw new err;
-                  }
-                  else {
-                    Captain.updateOne({_id: req.userData.userId}, {
-                      $push: {
-                        payment_status: done._id
-                      }
-                    }, (err, update) => {
-                      if (err) {
-                        console.log(err);
-                        throw new err;
-                      }
-                      else {
+                  const payment = new Payment(sendData);
+                  payment.save((err, done) => {
+                    if (err) {
+                      console.log(err);
+                      throw new err;
+                    }
+                    else {
 
-                        const status = value.data.STATUS;
-                        return res.status(200).json({
-                          success: true,
-                          data: result,
-                          status: status,
-                          amount: value.data.TXNAMOUNT
-                        });
-
-                      }
-                    });
-                  }
+                      Captain.updateOne({_id: person._id}, {
+                        $push: {
+                          payment_status: done._id
+                        }
+                      }, (err, update) => {
+                        if (err) {
+                          console.log(err);
+                          throw new err;
+                        }
+                        else {
+                          const status = value.data.STATUS;
+                          refreshArray.push(status);
+                          const amountInt = parseInt(value.data.TXNAMOUNT);
+                          amountArray.push(amountInt);
+                          if(refreshArray.length === result.length) {
+                            return res.status(200).json({
+                              success: true,
+                              data: result,
+                              status: status,
+                              amount: amountArray
+                            });
+                          }
+                        }
+                      });
+                    }
+                  });
                 });
-              });
-          }
-          else {
-            if(result.type === 'team'){
-              var status = 'No payment required';
             }
-            else{
-              var status = 'TXN_FAILURE';
+            else {
+              let status;
+              if(person.type === 'team'){
+                status = 'No payment required';
+              }
+              else{
+                status = 'TXN_FAILURE'; // 'TXN_FAILURE'
+              }
+              refreshArray.push(status);
+              amountArray.push(1);
+              if(refreshArray.length === result.length) {
+                return res.status(200).json({
+                  success: true,
+                  data: result,
+                  status: refreshArray,
+                  amount: amountArray
+                });
+              }
             }
-            return res.status(200).json({
-              success: true,
-              data: result,
-              status: status,
-              amount: 1
-            });
-          }
-        });
+          });
+      }
+
     })
     .catch(error => {
       console.log(error);
       throw new error;
     });
+});
+
+router.get('/hello', (req,res) => {
+  Captain.find()
+    .then(result=> {
+      // console.log(result);
+      result.forEach(libId => {
+        const lower = libId.libId.toUpperCase();
+        // console.log(lower);
+        Captain.updateOne({_id: libId._id}, {
+          $set: {
+            libId: lower
+          }
+        },(err,result) => {
+          console.log(result);
+        });
+      });
+    })
+    .catch(error => {
+      throw new error
+      }
+    );
 });
 
 module.exports = router;

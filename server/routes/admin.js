@@ -15,9 +15,9 @@ const checkAuth = require('../middleware/check-auth');
 const Captain = require('../model/registration');
 const Game = require('../model/games');
 const Payment = require('../model/payment');
+const CaptainList = require('../model/captain');
 
 const csv = require('fast-csv');
-
 
 const admin_login = 'KIET123';
 const admin_pass = 'KIET2K18';
@@ -58,7 +58,6 @@ router.get('/data',checkAuth, (req,res) => {
       throw new error
     });
 });
-
 
 router.post('/details', checkAuth , (req,res) => {
   Game.findOne({_id: req.body.data},' type captainId ')
@@ -152,5 +151,112 @@ router.post('/details', checkAuth , (req,res) => {
     });
 });
 
+router.get('/captainList', (req,res) => {
+  CaptainList.find()
+    .then(lists => {
+      return res.status(200).json(lists);
+    })
+    .catch(error => {
+      console.log(error);
+      throw new error;
+    })
+});
+
 module.exports = router;
 
+
+
+
+// router.get('/approval-list', checkAuth, (req,res) => {
+//   Captain.findOne({_id: req.userData.userId},'name team game type payment_status')
+//     .then(result => {
+//       let last_id;
+//       if(result.payment_status.length) {
+//         const length = result.payment_status.length;
+//         last_id = result.payment_status[length - 1];
+//       }
+//       else{
+//         last_id = null;
+//       }
+//
+//
+//       Payment.findOne({_id: last_id})
+//         .then(pay => {
+//           if(pay) {
+//             const status = pay.STATUS;
+//
+//             return res.status(200).json({
+//               success: true,
+//               data: result,
+//               status: status,
+//               amount: pay.TXNAMOUNT
+//             });
+//           }
+//           else{
+//             if(result.type === 'team'){
+//               var status = 'No payment required';
+//             }
+//             else{
+//               var status = 'TXN_FAILURE';
+//             }
+//             return res.status(200).json({
+//               success: true,
+//               data: result,
+//               status: status,
+//               amount: 1
+//             });
+//           }
+//         });
+//     })
+//     .catch(error => {
+//       console.log(error);
+//       throw new error;
+//     });
+// });
+
+// router.get('/approval-list', checkAuth, (req,res) => {
+//   Captain.findOne({_id: req.userData.userId},'name team game type payment_status')
+//     .then(result => {
+//       let last_id;
+//       if(result.payment_status.length) {
+//         const length = result.payment_status.length;
+//         last_id = result.payment_status[length - 1];
+//       }
+//       else{
+//         last_id = null;
+//       }
+//
+//       Payment.findOne({_id: last_id})
+//         .then(pay => {
+//           if(pay) {
+//             const status = pay.STATUS;
+//
+//             return res.status(200).json({
+//               success: true,
+//               data: result,
+//               status: status,
+//               amount: pay.TXNAMOUNT
+//             });
+//           }
+//           else{
+//             let status;
+//             if(result.type === 'team'){
+//               status = 'No payment required';
+//             }
+//             else{
+//               status = 'TXN_FAILURE';
+//             }
+//             return res.status(200).json({
+//               success: true,
+//               data: result,
+//               status: status,
+//               amount: 1
+//             });
+//           }
+//         });
+//     })
+//     .catch(error => {
+//       console.log(error);
+//       throw new error;
+//     });
+// });

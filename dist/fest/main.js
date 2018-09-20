@@ -184,7 +184,7 @@ module.exports = "nav {\n  background-color: #906678;\n  color: white;\n}\n\n.na
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\n\n<nav class=\"navbar navbar-expand-lg \">\n  <a style=\"margin-left: 20px\" class=\"navbar-brand\" routerLink=\"\"><b>Spardha</b></a>\n  <span class=\"flex\" style=\"flex-grow: 1\"></span>\n  <button class=\"navbar-toggler\" style=\"color: white;\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarSupportedContent\" aria-controls=\"navbarSupportedContent\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\n    <span class=\"navbar-toggler-icon\" style=\"margin-right: 10px; text-align: center\">Home</span>\n  </button>\n  <div class=\"collapse navbar-collapse\" id=\"navbarSupportedContent\">\n    <ul class=\"navbar-nav mr-auto\">\n      <li class=\"nav-item active\">\n        <a class=\"nav-link\" routerLink=\"/admin/home\"><b>Home</b><span class=\"sr-only\">(current)</span></a>\n      </li>\n      <span style=\"margin-left: 300%\"></span>\n      <div class=\"right\" style=\"text-align: right; justify-content: right; display: flex\">\n        <li class=\"nav-item\" *ngIf=\"!login\">\n          <a class=\"nav-link\">\n            <app-login></app-login>\n          </a>\n        </li>\n        <li class=\"nav-item\" *ngIf=\"login\">\n          <a class=\"nav-link\" (click)=\"logout()\" href=\"/admin/login\"><b>Logout</b></a>\n        </li>\n      </div>\n    </ul>\n  </div>\n</nav>\n\n"
+module.exports = "\n\n<nav class=\"navbar navbar-expand-lg \">\n  <a style=\"margin-left: 20px\" class=\"navbar-brand\" routerLink=\"\"><b>Spardha</b></a>\n  <span class=\"flex\" style=\"flex-grow: 1\"></span>\n  <button class=\"navbar-toggler\" style=\"color: white;\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarSupportedContent\" aria-controls=\"navbarSupportedContent\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\n    <span class=\"navbar-toggler-icon\" style=\"margin-right: 10px; text-align: center\">\n      <i class=\"material-icons\">\n        menu\n      </i>\n    </span>\n  </button>\n  <div class=\"collapse navbar-collapse\" id=\"navbarSupportedContent\">\n    <ul class=\"navbar-nav mr-auto\">\n      <li class=\"nav-item active\">\n        <a class=\"nav-link\" routerLink=\"/admin/home\"><b>Home</b><span class=\"sr-only\">(current)</span></a>\n      </li>\n      <li class=\"nav-item active\">\n        <a class=\"nav-link\" routerLink=\"/admin/captain-list\"><b>List</b></a>\n      </li>\n      <span style=\"margin-left: 300%\"></span>\n      <div class=\"right\" style=\"text-align: right; justify-content: right; display: flex\">\n        <li class=\"nav-item\" *ngIf=\"!login\">\n          <a class=\"nav-link\">\n            <app-login></app-login>\n          </a>\n        </li>\n        <li class=\"nav-item\" *ngIf=\"login\">\n          <a class=\"nav-link\" (click)=\"logout()\" href=\"/admin/login\"><b>Logout</b></a>\n        </li>\n      </div>\n    </ul>\n  </div>\n</nav>\n\n"
 
 /***/ }),
 
@@ -513,12 +513,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _individual_player_individual_player_component__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./individual-player/individual-player.component */ "./src/app/individual-player/individual-player.component.ts");
 /* harmony import */ var _payment_response_payment_response_component__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./payment-response/payment-response.component */ "./src/app/payment-response/payment-response.component.ts");
 /* harmony import */ var _captain_id_captain_id_component__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ./captain-id/captain-id.component */ "./src/app/captain-id/captain-id.component.ts");
+/* harmony import */ var _captain_list_captain_list_component__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ./captain-list/captain-list.component */ "./src/app/captain-list/captain-list.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -580,7 +582,8 @@ var AppModule = /** @class */ (function () {
                 _failed_failed_component__WEBPACK_IMPORTED_MODULE_30__["FailedComponent"],
                 _individual_player_individual_player_component__WEBPACK_IMPORTED_MODULE_31__["IndividualPlayerComponent"],
                 _payment_response_payment_response_component__WEBPACK_IMPORTED_MODULE_32__["PaymentResponseComponent"],
-                _captain_id_captain_id_component__WEBPACK_IMPORTED_MODULE_33__["CaptainIdComponent"]
+                _captain_id_captain_id_component__WEBPACK_IMPORTED_MODULE_33__["CaptainIdComponent"],
+                _captain_list_captain_list_component__WEBPACK_IMPORTED_MODULE_34__["CaptainListComponent"]
             ],
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
@@ -695,6 +698,78 @@ var CaptainIdComponent = /** @class */ (function () {
             _services_event_bus_service__WEBPACK_IMPORTED_MODULE_4__["EventBusService"]])
     ], CaptainIdComponent);
     return CaptainIdComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/captain-list/captain-list.component.css":
+/*!*********************************************************!*\
+  !*** ./src/app/captain-list/captain-list.component.css ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/captain-list/captain-list.component.html":
+/*!**********************************************************!*\
+  !*** ./src/app/captain-list/captain-list.component.html ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<app-admin-header></app-admin-header>\n<div style=\"text-align: center; margin-top: 10px\">\n  <h4>Captains Details</h4>\n</div>\n<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"table-responsive\">\n\n      <table class=\"table\">\n        <thead>\n        <tr>\n          <th scope=\"col\">#</th>\n          <th scope=\"col\">Library Id</th>\n          <th scope=\"col\">Game</th>\n          <th scope=\"col\">Verification Code</th>\n        </tr>\n        </thead>\n        <tbody>\n        <tr *ngFor=\"let captain of captains; let i = index\">\n          <th scope=\"row\">{{i+1}}</th>\n          <td>{{captain.libId}}</td>\n          <td>{{captain.game}}</td>\n          <td>{{captain.uniqueId}}</td>\n        </tr>\n        </tbody>\n      </table>\n    </div>\n  </div>\n  <br>\n  <br>\n</div>\n\n"
+
+/***/ }),
+
+/***/ "./src/app/captain-list/captain-list.component.ts":
+/*!********************************************************!*\
+  !*** ./src/app/captain-list/captain-list.component.ts ***!
+  \********************************************************/
+/*! exports provided: CaptainListComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CaptainListComponent", function() { return CaptainListComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _services_user_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../services/user.service */ "./src/app/services/user.service.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var CaptainListComponent = /** @class */ (function () {
+    function CaptainListComponent(userService) {
+        this.userService = userService;
+    }
+    CaptainListComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        var list$ = this.userService.captainLIst();
+        list$.subscribe(function (result) {
+            console.log(result);
+            _this.captains = result;
+        });
+    };
+    CaptainListComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-captain-list',
+            template: __webpack_require__(/*! ./captain-list.component.html */ "./src/app/captain-list/captain-list.component.html"),
+            styles: [__webpack_require__(/*! ./captain-list.component.css */ "./src/app/captain-list/captain-list.component.css")]
+        }),
+        __metadata("design:paramtypes", [_services_user_service__WEBPACK_IMPORTED_MODULE_1__["UserService"]])
+    ], CaptainListComponent);
+    return CaptainListComponent;
 }());
 
 
@@ -1016,7 +1091,7 @@ module.exports = "nav {\n  background-color: #906678;\n  color: white;\n}\n\n.na
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\n\n<nav class=\"navbar navbar-expand-lg \">\n  <a style=\"margin-left: 20px\" class=\"navbar-brand\" routerLink=\"\"><b>Spardha</b></a>\n  <span class=\"flex\" style=\"flex-grow: 1\"></span>\n  <button class=\"navbar-toggler\" style=\"color: white;\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarSupportedContent\" aria-controls=\"navbarSupportedContent\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\n    <span class=\"navbar-toggler-icon\" style=\"margin-right: 10px; text-align: center\">Home</span>\n  </button>\n  <div class=\"collapse navbar-collapse\" id=\"navbarSupportedContent\">\n    <ul class=\"navbar-nav mr-auto\">\n      <li class=\"nav-item active\">\n        <a class=\"nav-link\" routerLink=\"\"><b>Home</b><span class=\"sr-only\">(current)</span></a>\n      </li>\n      <li class=\"nav-item\">\n        <a class=\"nav-link\" routerLink=\"/about\"><b>About</b></a>\n      </li>\n      <li class=\"nav-item\">\n        <a class=\"nav-link\" routerLink=\"/event\"><b>Event</b></a>\n      </li>\n      <li class=\"nav-item\">\n        <a class=\"nav-link\" *ngIf=\"login\" routerLink=\"/user\"><b>Status</b></a>\n      </li>\n      <span style=\"margin-left: 70%\"></span>\n      <div class=\"right\" style=\"text-align: right; justify-content: right; display: flex\">\n        <li class=\"nav-item\" *ngIf=\"!login\">\n          <a class=\"nav-link\">\n            <app-login></app-login>\n          </a>\n        </li>\n        <li class=\"nav-item\" *ngIf=\"login\">\n          <a class=\"nav-link\" (click)=\"logout()\" href=\"/\"><b>Logout</b></a>\n        </li>\n      </div>\n    </ul>\n  </div>\n</nav>\n\n"
+module.exports = "\n\n<nav class=\"navbar navbar-expand-lg \">\n  <a style=\"margin-left: 20px\" class=\"navbar-brand\" routerLink=\"\"><b>Spardha</b></a>\n  <span class=\"flex\" style=\"flex-grow: 1\"></span>\n  <button class=\"navbar-toggler\" style=\"color: white;\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarSupportedContent\" aria-controls=\"navbarSupportedContent\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\n    <span class=\"navbar-toggler-icon\" style=\"margin-right: 10px; text-align: center\">\n      <i class=\"material-icons\">\n        menu\n      </i>\n    </span>\n  </button>\n  <div class=\"collapse navbar-collapse\" id=\"navbarSupportedContent\">\n    <ul class=\"navbar-nav mr-auto\">\n      <li class=\"nav-item active\">\n        <a class=\"nav-link\" routerLink=\"\"><b>Home</b><span class=\"sr-only\">(current)</span></a>\n      </li>\n      <li class=\"nav-item\">\n        <a class=\"nav-link\" routerLink=\"/about\"><b>About</b></a>\n      </li>\n      <li class=\"nav-item\">\n        <a class=\"nav-link\" routerLink=\"/event\"><b>Event</b></a>\n      </li>\n      <li class=\"nav-item\">\n        <a class=\"nav-link\" *ngIf=\"login\" routerLink=\"/user\"><b>Payments</b></a>\n      </li>\n      <span style=\"margin-left: 70%\"></span>\n      <div class=\"right\" style=\"text-align: right; justify-content: right; display: flex\">\n        <li class=\"nav-item\" *ngIf=\"!login\">\n          <a class=\"nav-link\">\n            <app-login></app-login>\n          </a>\n        </li>\n        <li class=\"nav-item\" *ngIf=\"login\">\n          <a class=\"nav-link\" (click)=\"logout()\" href=\"/\"><b>Logout</b></a>\n        </li>\n      </div>\n    </ul>\n  </div>\n</nav>\n\n"
 
 /***/ }),
 
@@ -1236,7 +1311,7 @@ module.exports = ".container{\n  margin-top: 100px;\n}\n\n\nlabel, p{\n  color: 
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<app-header></app-header>\n<div class=\"container\">\n\n\n  <div class=\"row\">\n    <div class=\"col-sm-8\">\n      <div class=\"card\">\n        <div class=\"card-header\" style=\"color: #ffffff; background-color: #906678\">\n          Register to an Event\n        </div>\n        <div class=\"card-body\">\n          <form method=\"post\" [formGroup]=\"uploadForm\" enctype=\"multipart/form-data\" (ngSubmit)=\"OnUpload(uploadForm.value)\" >\n\n            <div class=\"form-group\">\n              <label>Library Id<span style=\"color: red;\">*</span></label>\n              <input type=\"text\"  class=\"form-control\" #sub formControlName=\"libId\" placeholder=\"college library id\">\n            </div>\n\n            <div class=\"form-group\">\n              <label>Mobile Number<span style=\"color: red;\">*</span></label>\n              <input type=\"text\" class=\"form-control\" #sub formControlName=\"phone\" placeholder=\"personal mobile number\">\n            </div>\n\n            <div class=\"form-group\">\n              <label>Games <span style=\"color: red;\">*</span></label>\n              <select class=\"form-control\" formControlName=\"game\">\n                <option value=\"table-tennis\">Table tennis</option>\n                <option value=\"chess\">Chess</option>\n                <option value=\"carrom\">Carrom</option>\n                <option value=\"pool\">Pool Game</option>\n                <option value=\"lawn-tennis\">Lawn tennis</option>\n                <option value=\"athletics\">Athletics</option>\n                <option value=\"badminton\">Badminton</option>\n              </select>\n            </div>\n\n            <div class=\"form-group\">\n              <label>Name<span style=\"color: red;\">*</span></label>\n              <input type=\"text\" disabled  class=\"form-control\" #sub formControlName=\"name\" value=\"{{data.Name}}\" placeholder=\"Your full name\">\n            </div>\n\n            <div class=\"form-group\">\n              <label>Gender<span style=\"color: red;\">*</span></label>\n              <input type=\"text\" disabled  class=\"form-control\" #sub value=\"{{data.Gender}}\" formControlName=\"gender\" placeholder=\"personal mobile number\">\n            </div>\n\n            <div class=\"form-group\">\n              <label>Select Branch<span style=\"color: red;\">*</span></label>\n              <input type=\"text\" disabled  class=\"form-control\" #sub value=\"{{data.Dept}}\" formControlName=\"branch\" placeholder=\"Branch\">\n            </div>\n\n            <div class=\"form-group\">\n              <label>Year <span style=\"color: red;\">*</span></label>\n              <input type=\"text\" disabled  class=\"form-control\" #sub value=\"{{data.year}}\" formControlName=\"year\" placeholder=\"Year\">\n            </div>\n\n            <div class=\"form-group\">\n              <span *ngIf=\"err\" style=\"color: red\">{{'*'+error}}</span>\n            </div>\n\n            <button type=\"submit\" [disabled]=\"uploadForm.invalid || !block\" class=\"btn btn-primary\">Submit</button>\n            <!--[disabled]=\"uploadForm.invalid || condition\"-->\n          </form>\n        </div>\n      </div>\n    </div>\n    <div class=\"col-sm-4\">\n      <div class=\"card\">\n        <div class=\"card-body\">\n          <p>If you have any problem in the registration process, you can contact to\n            <b>\n              Your respective game Apex\n            </b>\n            or can call at <b>7455969734 (Rupesh yadav)</b>\n          </p>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n\n\n"
+module.exports = "<app-header></app-header>\n<div class=\"container\">\n\n\n  <div class=\"row\">\n    <div class=\"col-sm-8\">\n      <div class=\"card\">\n        <div class=\"card-header\" style=\"color: #ffffff; background-color: #906678\">\n          Register to an Event\n        </div>\n        <div class=\"card-body\">\n          <form method=\"post\" [formGroup]=\"uploadForm\" enctype=\"multipart/form-data\" (ngSubmit)=\"OnUpload(uploadForm.value)\" >\n\n            <div class=\"form-group\">\n              <label>Library Id<span style=\"color: red;\">*</span></label>\n              <input type=\"text\"  class=\"form-control\" #sub formControlName=\"libId\" placeholder=\"college library id\">\n            </div>\n\n            <div class=\"form-group\">\n              <label>Mobile Number<span style=\"color: red;\">*</span></label>\n              <input type=\"text\" class=\"form-control\" #sub formControlName=\"phone\" placeholder=\"personal mobile number\">\n            </div>\n\n            <div class=\"form-group\">\n              <label>Games <span style=\"color: red;\">*</span></label>\n              <select class=\"form-control\" formControlName=\"game\">\n                <option value=\"table-tennis\">Table tennis</option>\n                <option value=\"chess\">Chess</option>\n                <option value=\"carrom\">Carrom</option>\n                <option value=\"pool\">Pool Game</option>\n                <option value=\"lawn-tennis\">Lawn tennis</option>\n                <option value=\"athletics\">Athletics</option>\n                <option value=\"badminton\">Badminton</option>\n              </select>\n            </div>\n\n            <div class=\"form-group\">\n              <label>Name<span style=\"color: red;\">*</span></label>\n              <input type=\"text\" disabled  class=\"form-control\" #sub formControlName=\"name\" value=\"{{data.Name}}\" placeholder=\"Your full name\">\n            </div>\n\n            <div class=\"form-group\">\n              <label>Gender<span style=\"color: red;\">*</span></label>\n              <input type=\"text\" disabled  class=\"form-control\" #sub value=\"{{data.Gender}}\" formControlName=\"gender\" placeholder=\"personal mobile number\">\n            </div>\n\n            <div class=\"form-group\">\n              <label>Select Branch<span style=\"color: red;\">*</span></label>\n              <input type=\"text\" disabled  class=\"form-control\" #sub value=\"{{data.Dept}}\" formControlName=\"branch\" placeholder=\"Branch\">\n            </div>\n\n            <div class=\"form-group\">\n              <label>Year <span style=\"color: red;\">*</span></label>\n              <input type=\"text\" disabled  class=\"form-control\" #sub value=\"{{data.year}}\" formControlName=\"year\" placeholder=\"Year\">\n            </div>\n\n            <div class=\"form-group\">\n              <span *ngIf=\"err\" style=\"color: red\">{{'*'+error}}</span>\n            </div>\n\n            <button type=\"submit\" [disabled]=\"uploadForm.invalid || !block\" class=\"btn btn-primary\">Submit</button>\n            <!--[disabled]=\"uploadForm.invalid || condition\"-->\n          </form>\n        </div>\n      </div>\n    </div>\n    <div class=\"col-sm-4\">\n      <div class=\"card\">\n        <div class=\"card-body\">\n          <p>If you have any problem in the registration process, you can contact to\n            <b>\n              Your respective game Apex\n            </b>\n            or can call at <b>7455969734 (Rupesh yadav)</b>\n          </p>\n        </div>\n      </div>\n      <div class=\"card\" style=\"margin-top: 20px\">\n        <div class=\"card-body\">\n          <table class=\"table\">\n            <tbody>\n            <tr>\n              <td scope=\"row\">- Do not register again for same game</td>\n            </tr>\n            <tr>\n            <tr>\n              <td scope=\"row\">- Go to Payments if you have already registered</td>\n            </tr>\n            </tbody>\n          </table>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n\n\n"
 
 /***/ }),
 
@@ -1657,9 +1732,10 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 var PaymentComponent = /** @class */ (function () {
-    function PaymentComponent(userService, router) {
+    function PaymentComponent(userService, router, route) {
         this.userService = userService;
         this.router = router;
+        this.route = route;
         this.data = '';
         this.payble = '';
         this.paytm = '';
@@ -1667,23 +1743,25 @@ var PaymentComponent = /** @class */ (function () {
     }
     PaymentComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.userService.getID().subscribe(function (data) {
-            if (data.success) {
-                _this.data = data.data;
-                _this.payble = data.TXN_AMOUNT;
-                _this.paytm = data;
-                if (data.status === 'TXN_SUCCESS') {
-                    _this.disable = false;
+        this.route.params.subscribe(function (params) {
+            var id = params['id'];
+            _this.userService.getID(id).subscribe(function (data) {
+                if (data.success) {
+                    _this.data = data.data;
+                    _this.payble = data.TXN_AMOUNT;
+                    _this.paytm = data;
+                    if (data.status === 'TXN_SUCCESS') {
+                        _this.disable = false;
+                    }
+                    else {
+                        _this.disable = true;
+                    }
                 }
-                else {
-                    _this.disable = true;
-                }
-            }
+            });
         });
     };
     PaymentComponent.prototype.GoPayment = function () {
         this.userService.goPaytm(this.paytm);
-        // this.router.navigate(['payment_response']);
     };
     PaymentComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -1691,7 +1769,7 @@ var PaymentComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./payment.component.html */ "./src/app/payment/payment.component.html"),
             styles: [__webpack_require__(/*! ./payment.component.css */ "./src/app/payment/payment.component.css")]
         }),
-        __metadata("design:paramtypes", [_services_user_service__WEBPACK_IMPORTED_MODULE_1__["UserService"], _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"]])
+        __metadata("design:paramtypes", [_services_user_service__WEBPACK_IMPORTED_MODULE_1__["UserService"], _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"], _angular_router__WEBPACK_IMPORTED_MODULE_2__["ActivatedRoute"]])
     ], PaymentComponent);
     return PaymentComponent;
 }());
@@ -1793,7 +1871,7 @@ var PlayerComponent = /** @class */ (function () {
                 }
                 else {
                     sweetalert__WEBPACK_IMPORTED_MODULE_4___default()('Team has been registered successfully, Now go to payment page', '', 'success');
-                    _this.router.navigate(['payment']);
+                    _this.router.navigate(['/payment', data.id]);
                 }
             }
             else {
@@ -1847,6 +1925,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _failed_failed_component__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./failed/failed.component */ "./src/app/failed/failed.component.ts");
 /* harmony import */ var _payment_response_payment_response_component__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./payment-response/payment-response.component */ "./src/app/payment-response/payment-response.component.ts");
 /* harmony import */ var _captain_id_captain_id_component__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./captain-id/captain-id.component */ "./src/app/captain-id/captain-id.component.ts");
+/* harmony import */ var _captain_list_captain_list_component__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./captain-list/captain-list.component */ "./src/app/captain-list/captain-list.component.ts");
+
 
 
 
@@ -1896,7 +1976,7 @@ var myRoutes = [
         component: _player_player_component__WEBPACK_IMPORTED_MODULE_3__["PlayerComponent"]
     },
     {
-        path: 'payment',
+        path: 'payment/:id',
         canActivate: [_guard_auth_guard__WEBPACK_IMPORTED_MODULE_14__["AuthGuard"]],
         component: _payment_payment_component__WEBPACK_IMPORTED_MODULE_4__["PaymentComponent"]
     },
@@ -1944,6 +2024,11 @@ var myRoutes = [
     {
         path: 'captain/unique/id',
         component: _captain_id_captain_id_component__WEBPACK_IMPORTED_MODULE_17__["CaptainIdComponent"]
+    },
+    {
+        path: 'captain-list',
+        canActivate: [_guard_auth_guard__WEBPACK_IMPORTED_MODULE_14__["AuthGuard"]],
+        component: _captain_list_captain_list_component__WEBPACK_IMPORTED_MODULE_18__["CaptainListComponent"]
     }
 ];
 
@@ -2039,14 +2124,6 @@ var UserService = /** @class */ (function () {
             headers: { Authorization: 'Bearer ' + token }
         });
     };
-    UserService.prototype.approveData = function () {
-        var token = localStorage.getItem('USER_TOKEN');
-        return this.http.get('/user/approval-list', {
-            headers: { Authorization: 'bearer ' + token }
-        }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (pending) {
-            return pending;
-        }));
-    };
     UserService.prototype.approve = function (value) {
         var token = localStorage.getItem('USER_TOKEN');
         return this.http.post('/user/approve', { value: value }, {
@@ -2080,9 +2157,9 @@ var UserService = /** @class */ (function () {
             return data;
         }));
     };
-    UserService.prototype.getID = function () {
+    UserService.prototype.getID = function (id) {
         var token = localStorage.getItem('USER_TOKEN');
-        return this.http.get('/user/keys', {
+        return this.http.get('/user/keys?id=' + id, {
             headers: { Authorization: 'bearer ' + token }
         }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (pending) {
             return pending;
@@ -2102,6 +2179,13 @@ var UserService = /** @class */ (function () {
         return this.http.post('/user/refresh-event', {}, {
             headers: { Authorization: 'Bearer ' + token }
         });
+    };
+    UserService.prototype.captainLIst = function () {
+        var url = '/admin/captainList';
+        return this.http.get(url)
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (data) {
+            return data;
+        }));
     };
     UserService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
@@ -2271,7 +2355,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<app-header></app-header>\n\n<div style=\"text-align: center; margin-top: 10px\">\n  <h4>Your registered team</h4>\n</div>\n<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"table-responsive\">\n\n    <table class=\"table\">\n      <thead>\n      <tr>\n        <th scope=\"col\">#</th>\n        <th scope=\"col\">Captain Name</th>\n        <th scope=\"col\">Game</th>\n        <th scope=\"col\">Team Member</th>\n        <th scope=\"col\">Amount</th>\n        <th scope=\"col\">Check</th>\n        <th scope=\"col\"><button (click)=\"refreshButton()\" class=\"btn btn-danger\">Refresh</button></th>\n      </tr>\n      </thead>\n      <tbody>\n\n      <tr>\n        <th scope=\"row\">--></th>\n        <td>{{names.name}}</td>\n        <td>{{names.game}}</td>\n        <td>{{names.team.length+1}}</td>\n        <td>{{status}}</td>\n\n        <td *ngIf=\"!again\"><a routerLink=\"/payment\">Pay Again</a></td>\n        <td></td>\n      </tr>\n\n      </tbody>\n    </table>\n    </div>\n  </div>\n  <br>\n  <br>\n  <div><b>Note</b>--> Please Click on refresh button after 2-3 minutes time, If the <b>Payment Status</b> is <b>PENDING</b></div>\n</div>\n\n"
+module.exports = "<app-header></app-header>\n\n<div style=\"text-align: center; margin-top: 10px\">\n  <h4>Your registered team</h4>\n</div>\n<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"table-responsive\">\n\n    <table class=\"table\">\n      <thead>\n      <tr>\n        <th scope=\"col\">#</th>\n        <th scope=\"col\">Captain Name</th>\n        <th scope=\"col\">Game</th>\n        <th scope=\"col\">Team Member</th>\n        <th scope=\"col\">Amount</th>\n        <th scope=\"col\">Check</th>\n        <!--<th scope=\"col\"><button (click)=\"refreshButton()\" class=\"btn btn-danger\">Refresh</button></th>-->\n      </tr>\n      </thead>\n      <tbody>\n\n      <tr *ngFor=\"let name of names; let i = index\">\n        <th scope=\"row\">{{i+1}}</th>\n        <td>{{name.name}}</td>\n        <td>{{name.game}}</td>\n        <td>{{name.team.length+1}}</td>\n\n        <td *ngIf=\"name.type === 'team'\"></td>\n        <td *ngIf=\"status[i] === 'TXN_FAILURE' && name.type === 'individual'\">UNPAID</td>\n        <td *ngIf=\"status[i] === 'PENDING' && name.type === 'individual'\">PENDING</td>\n        <td *ngIf=\"status[i] === 'TXN_SUCCESS' && amount[i] > 68 && name.type === 'individual'\">PAID</td>\n        <td *ngIf=\"status[i] === 'TXN_SUCCESS' && amount[i] < 68 && name.type === 'individual'\">UNPAID</td>\n\n        <td *ngIf=\"name.type === 'team'\"></td>\n        <td *ngIf=\"status[i] === 'TXN_FAILURE' && name.type === 'individual'\"><a  [routerLink]=\"['/payment', name._id]\">Pay Again</a></td>\n        <td *ngIf=\"status[i] === 'PENDING' && name.type === 'individual'\"><a (click)=\"refreshButton()\" routerLink=\"#\">Refresh</a></td>\n        <td *ngIf=\"status[i] === 'TXN_SUCCESS' && amount[i] > 68 && name.type === 'individual'\"></td>\n        <td *ngIf=\"status[i] === 'TXN_SUCCESS' && amount[i] < 68 && name.type === 'individual'\"><a  [routerLink]=\"['/payment', name._id]\">Pay Again</a></td>\n\n      </tr>\n      </tbody>\n    </table>\n    </div>\n  </div>\n  <br>\n  <br>\n  <div><b>Note</b>--> Please Click on Refresh after some time, If the <b>Payment Status</b> is <b>PENDING</b></div>\n</div>\n\n"
 
 /***/ }),
 
@@ -2304,25 +2388,22 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 var UserComponent = /** @class */ (function () {
+    // amount: number;
     function UserComponent(userService, route) {
         this.userService = userService;
         this.route = route;
-        this.names = {};
-        this.status = '';
-        this.again = true;
+        this.names = [];
+        this.status = [];
+        this.amount = [];
         this.CUST_ID = '';
     }
     UserComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.userService.approveData().subscribe(function (data) {
-            _this.route.queryParams.subscribe(function (params) {
-                var state = params['status'];
-                var message = params['message'];
-                _this.refreshButton();
-                sweetalert__WEBPACK_IMPORTED_MODULE_2___default()(message, '', state);
-                params['status'].remove();
-                params['status'].remove();
-            });
+        this.route.queryParams.subscribe(function (params) {
+            var state = params['status'];
+            var message = params['message'];
+            _this.refreshButton();
+            sweetalert__WEBPACK_IMPORTED_MODULE_2___default()(message, '', state);
         });
     };
     UserComponent.prototype.refreshButton = function () {
@@ -2330,38 +2411,9 @@ var UserComponent = /** @class */ (function () {
         var refresh$ = this.userService.refreshData();
         refresh$.subscribe(function (result) {
             _this.names = result.data;
-            var amounts = Number(result.amount);
-            _this.CUST_ID = result._id;
-            _this.names = result.data;
-            if (result.status === 'TXN_FAILURE') {
-                _this.again = false;
-                _this.amount = amounts;
-                _this.status = 'UNPAID';
-            }
-            else {
-                if (result.status === 'TXN_SUCCESS') {
-                    _this.again = true;
-                    if (amounts >= 68) {
-                        _this.status = 'PAID';
-                        _this.amount = amounts;
-                    }
-                    else {
-                        _this.again = false;
-                        _this.status = 'UNPAID';
-                        _this.amount = amounts;
-                    }
-                }
-                else {
-                    if (result.status === 'PENDING') {
-                        _this.again = true;
-                        _this.status = 'PENDING';
-                    }
-                    else {
-                        _this.again = true;
-                        _this.status = result.status;
-                    }
-                }
-            }
+            _this.status = result.status;
+            _this.amount = result.amount;
+            console.log('names --> ', _this.names);
         });
     };
     UserComponent.prototype.payAmount = function () {

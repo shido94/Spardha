@@ -30,16 +30,6 @@ export class UserService {
     });
   }
 
-  approveData(): Observable<any> {
-    const token = localStorage.getItem('USER_TOKEN');
-    return this.http.get<any>('/user/approval-list', {
-      headers: {Authorization: 'bearer ' + token}
-    }).pipe(
-      map((pending) => {
-        return pending;
-      })
-    );
-  }
 
   approve(value) {
     const token = localStorage.getItem('USER_TOKEN');
@@ -84,9 +74,9 @@ export class UserService {
       );
   }
 
-  getID(): Observable<any> {
+  getID(id): Observable<any> {
     const token = localStorage.getItem('USER_TOKEN');
-    return this.http.get<any>('/user/keys', {
+    return this.http.get<any>('/user/keys?id=' + id, {
       headers: {Authorization: 'bearer ' + token}
     }).pipe(
       map((pending) => {
@@ -113,6 +103,15 @@ export class UserService {
     });
   }
 
+  captainLIst() {
+    const url = '/admin/captainList';
+    return this.http.get(url)
+      .pipe(
+        map((data) => {
+          return data;
+        })
+      );
+  }
 
 
 }

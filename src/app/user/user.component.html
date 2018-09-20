@@ -16,28 +16,36 @@
         <th scope="col">Team Member</th>
         <th scope="col">Amount</th>
         <th scope="col">Check</th>
-        <th scope="col"><button (click)="refreshButton()" class="btn btn-danger">Refresh</button></th>
+        <!--<th scope="col"><button (click)="refreshButton()" class="btn btn-danger">Refresh</button></th>-->
       </tr>
       </thead>
       <tbody>
 
-      <tr>
-        <th scope="row">--></th>
-        <td>{{names.name}}</td>
-        <td>{{names.game}}</td>
-        <td>{{names.team.length+1}}</td>
-        <td>{{status}}</td>
+      <tr *ngFor="let name of names; let i = index">
+        <th scope="row">{{i+1}}</th>
+        <td>{{name.name}}</td>
+        <td>{{name.game}}</td>
+        <td>{{name.team.length+1}}</td>
 
-        <td *ngIf="!again"><a routerLink="/payment">Pay Again</a></td>
-        <td></td>
+        <td *ngIf="name.type === 'team'"></td>
+        <td *ngIf="status[i] === 'TXN_FAILURE' && name.type === 'individual'">UNPAID</td>
+        <td *ngIf="status[i] === 'PENDING' && name.type === 'individual'">PENDING</td>
+        <td *ngIf="status[i] === 'TXN_SUCCESS' && amount[i] > 68 && name.type === 'individual'">PAID</td>
+        <td *ngIf="status[i] === 'TXN_SUCCESS' && amount[i] < 68 && name.type === 'individual'">UNPAID</td>
+
+        <td *ngIf="name.type === 'team'"></td>
+        <td *ngIf="status[i] === 'TXN_FAILURE' && name.type === 'individual'"><a  [routerLink]="['/payment', name._id]">Pay Again</a></td>
+        <td *ngIf="status[i] === 'PENDING' && name.type === 'individual'"><a (click)="refreshButton()" routerLink="#">Refresh</a></td>
+        <td *ngIf="status[i] === 'TXN_SUCCESS' && amount[i] > 68 && name.type === 'individual'"></td>
+        <td *ngIf="status[i] === 'TXN_SUCCESS' && amount[i] < 68 && name.type === 'individual'"><a  [routerLink]="['/payment', name._id]">Pay Again</a></td>
+
       </tr>
-
       </tbody>
     </table>
     </div>
   </div>
   <br>
   <br>
-  <div><b>Note</b>--> Please Click on refresh button after 2-3 minutes time, If the <b>Payment Status</b> is <b>PENDING</b></div>
+  <div><b>Note</b>--> Please Click on Refresh after some time, If the <b>Payment Status</b> is <b>PENDING</b></div>
 </div>
 
