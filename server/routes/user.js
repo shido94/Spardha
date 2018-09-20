@@ -960,7 +960,7 @@ router.post('/refresh-event',checkAuth , (req,res) => {
                             return res.status(200).json({
                               success: true,
                               data: result,
-                              status: status,
+                              status: refreshArray,
                               amount: amountArray
                             });
                           }
