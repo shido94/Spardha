@@ -110,7 +110,7 @@ router.post('/details', checkAuth , (req,res) => {
                         const status = value.data.STATUS;
                         array.push(status);
                         if(array.length === captain.captainId.length){
-                          console.log(array);
+                          console.log('array --> ',array);
                           res.status(200).json({
                             success: true,
                             data: captain,
