@@ -815,7 +815,7 @@ router.post('/paytm_response', (req,res) => {
       const errors = new Error({
         type: error
       });
-      error.save((err,result) => {
+      errors.save((err,result) => {
         console.log(result);
       });
     });
