@@ -52,24 +52,24 @@ app.get('/submit', (req,res) => {
 
 // Server connection API
 
-const server = http.createServer(app);
-mongoose.connect('mongodb://localhost:27017/fest',{ useNewUrlParser: true });
-const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function() {
-  // we're connected!
-  server.listen(port, () => {
-    console.log('Server is connected to localhost:'+port);
-  });
-});
-
-//
 // const server = http.createServer(app);
 // mongoose.connect('mongodb://localhost:27017/fest',{ useNewUrlParser: true });
 // const db = mongoose.connection;
 // db.on('error', console.error.bind(console, 'connection error:'));
 // db.once('open', function() {
 //   // we're connected!
-//   server.listen(1337,"0.0.0.0");
+//   server.listen(port, () => {
+//     console.log('Server is connected to localhost:'+port);
+//   });
 // });
+
+
+const server = http.createServer(app);
+mongoose.connect('mongodb://localhost:27017/fest',{ useNewUrlParser: true });
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+  // we're connected!
+  server.listen(1337,"0.0.0.0");
+});
 //

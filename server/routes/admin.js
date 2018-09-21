@@ -269,6 +269,7 @@ router.post('/details', checkAuth , (req,res) => {
 //   //   });
 // });
 
+
 router.get('/captainList', (req,res) => {
   CaptainList.find()
     .then(lists => {
