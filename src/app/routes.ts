@@ -74,7 +74,7 @@ export const myRoutes: Routes = [
     component: AdminHomeComponent
   },
   {
-    path: 'admin/home/:id',
+    path: 'admin/home/:id/:name',
     canActivate: [AuthGuard],
     component: AdminDetailsComponent
   },

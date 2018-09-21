@@ -64,7 +64,7 @@ router.post('/register', (req,res) => {
                 capt.save( (err,done) => {
                   if(err){
                     console.log(err);
-                    throw new err
+                    // throw new err
                   }
                   Game.updateOne({name: done.game}, {
                     $push: {
@@ -73,7 +73,7 @@ router.post('/register', (req,res) => {
                   }, (errors, update) => {
                     if(errors) {
                       console.log(errors);
-                      throw errors
+                      // throw errors
                     }
                     else{
                       const token = jwt.sign({
@@ -100,7 +100,7 @@ router.post('/register', (req,res) => {
       })
       .catch(error => {
         console.log(error);
-        throw new error
+        // throw new error
       });
   }
   else {
@@ -110,7 +110,7 @@ router.post('/register', (req,res) => {
       captain.save((err, result) => {
         if (err) {
           console.log(err);
-          throw err;
+          // throw new err;
         }
         else {
           // const game = new Game();
@@ -147,7 +147,6 @@ router.post('/register', (req,res) => {
 });
 
 // main wala hai
-
 
 // router.post('/register', (req,res) => {
 //   const game = req.body;
@@ -412,7 +411,7 @@ router.post('/member', checkAuth , (req,res) => {
                       }, (errors,update) => {
                         if(errors){
                           console.log(errors);
-                          throw errors;
+                          // throw errors;
                         }
                         else{
                           return res.status(200).json({
@@ -549,7 +548,7 @@ router.post('/member', checkAuth , (req,res) => {
                                   }, (errors,update) => {
                                     if(errors){
                                       console.log(errors);
-                                      throw errors;
+                                      // throw errors;
                                     }
                                     else{
                                       return res.status(200).json({
@@ -590,7 +589,7 @@ router.post('/member', checkAuth , (req,res) => {
                       }, (errors,update) => {
                         if(errors){
                           console.log(errors);
-                          throw errors;
+                          // throw errors;
                         }
                         else{
                           return res.status(200).json({
@@ -609,13 +608,13 @@ router.post('/member', checkAuth , (req,res) => {
             })
             .catch(err => {
               console.log(err);
-              throw err;
+              // throw err;
             });
 
         })
         .catch(error => {
           console.log(error);
-          throw new error
+          // throw new error
         });
     }
   }
@@ -671,7 +670,7 @@ router.get('/keys', checkAuth, (req,res) => {
         })
         .catch(error => {
           console.log(error);
-          throw new error;
+          // throw new error;
         });
 
 });
@@ -688,7 +687,7 @@ router.post('/add-captain', (req,res) => {
         }, (err,updated) => {
           if(err){
             console.log(err);
-            throw new err;
+            // throw new err;
           }
           else{
             return res.status(200).json({
@@ -703,7 +702,7 @@ router.post('/add-captain', (req,res) => {
         captain.save((err,result) =>{
           if(err){
             console.log(err);
-            throw new err;
+            // throw new err;
           }
           return res.status(200).json({
             success: true,
@@ -714,7 +713,7 @@ router.post('/add-captain', (req,res) => {
     })
     .catch(errors => {
       console.log(errors);
-      throw new errors
+      // throw new errors
     });
 });
 
@@ -748,9 +747,10 @@ router.post('/login', (req,res) => {
     })
     .catch(error => {
       console.log(error);
-      throw error;
+      // throw error;
     });
 });
+
 router.get('/paytm_data', (req,res) => {
   const obj = req.query.amount;
   const paytm = JSON.parse(obj);
@@ -777,7 +777,7 @@ router.post('/paytm_response', (req,res) => {
       payment.save((err, done) => {
         if (err) {
           console.log(err);
-          throw new err;
+          // throw new err;
         }
         else {
           Captain.updateOne({_id: sendData.REGISTRATION_ID}, {
@@ -787,7 +787,7 @@ router.post('/paytm_response', (req,res) => {
           }, (err, update) => {
             if (err) {
               console.log(err);
-              throw new err;
+              // throw new err;
             }
             else {
               if (sendData.TXNAMOUNT >= 68) {
@@ -942,7 +942,7 @@ router.post('/refresh-event',checkAuth , (req,res) => {
                   payment.save((err, done) => {
                     if (err) {
                       console.log(err);
-                      throw new err;
+                      // throw new err;
                     }
                     else {
 
@@ -953,7 +953,7 @@ router.post('/refresh-event',checkAuth , (req,res) => {
                       }, (err, update) => {
                         if (err) {
                           console.log(err);
-                          throw new err;
+                          // throw new err;
                         }
                         else {
                           const status = value.data.STATUS;
@@ -1003,7 +1003,7 @@ router.post('/refresh-event',checkAuth , (req,res) => {
     })
     .catch(error => {
       console.log(error);
-      throw new error;
+      // throw new error;
     });
 });
 
@@ -1024,7 +1024,7 @@ router.get('/hello', (req,res) => {
       });
     })
     .catch(error => {
-      throw new error
+      // throw new error
       }
     );
 });

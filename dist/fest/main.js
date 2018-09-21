@@ -104,7 +104,7 @@ module.exports = "\n"
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<app-admin-header></app-admin-header>\n<div class=\"full\">\n  <div class=\"container\" style=\"text-align: center\">\n    <div style=\"text-align: center; margin-top: 5%\">\n      <h3>Games</h3>\n    </div>\n    <div class=\"card\" style=\"text-align: center; margin-top: 50px\" *ngFor=\"let captain of collections; let i = index;\">\n      <div class=\"card-header\" style=\"background-color: #906678\">\n        <h4 style=\"color: #003366\"><b>Team {{ i+1}}</b></h4>\n      </div>\n      <div class=\"card-body\" style=\"background-color: #B58096; color: white\">\n        <div class=\"row\">\n          <div class=\"table-responsive\">\n          <table class=\"table\">\n            <thead>\n            <tr style=\"color: #003366\">\n              <th scope=\"col\"><b>#</b></th>\n              <th scope=\"col\"><b>Name</b></th>\n              <th scope=\"col\"><b>Branch</b></th>\n              <th scope=\"col\"><b>Library Id</b></th>\n              <th scope=\"col\"><b>Year</b></th>\n              <th scope=\"col\"><b>Contact</b></th>\n              <th scope=\"col\"><b>Status</b></th>\n              <th scope=\"col\"><b>Role</b></th>\n            </tr>\n            </thead>\n            <tbody>\n\n            <tr>\n              <td>1</td>\n              <td>{{captain.name}}</td>\n              <td>{{captain.branch}}</td>\n              <td>{{captain.libId}}</td>\n              <td>{{captain.year}}</td>\n              <td>{{captain.phone}}</td>\n              <th scope=\"col\"><b>{{status[i]}}</b></th>\n              <td>{{captain.role}}</td>\n            </tr>\n            <tr *ngFor=\"let player of captain.team; let j = index\">\n              <td>{{j+2}}</td>\n              <td>{{player.name}}</td>\n              <td>{{player.branch}}</td>\n              <td>{{player.libId}}</td>\n              <td>{{player.year}}</td>\n              <td></td>\n              <td>{{player.role}}</td>\n            </tr>\n\n\n            </tbody>\n          </table>\n          </div>\n        </div>\n      </div>\n\n    </div>\n  </div>\n  <div style=\"margin-top: 20px; color: white\">\n    n\n  </div>\n</div>\n"
+module.exports = "<app-admin-header></app-admin-header>\n<div class=\"full\">\n  <div class=\"container\" style=\"text-align: center\">\n    <div style=\"text-align: center; margin-top: 5%\">\n      <h3>Games</h3>\n    </div>\n    <div class=\"card\" style=\"text-align: center; margin-top: 50px\" *ngFor=\"let captain of data; let i = index;\">\n      <div class=\"card-header\" style=\"background-color: #906678\">\n        <h4 style=\"color: #003366\"><b>Team {{ i+1}}</b></h4>\n      </div>\n      <div class=\"card-body\" style=\"background-color: #B58096; color: white\">\n        <div class=\"row\">\n          <div class=\"table-responsive\">\n          <table class=\"table\">\n            <thead>\n            <tr style=\"color: #003366\">\n              <th scope=\"col\"><b>#</b></th>\n              <th scope=\"col\"><b>Name</b></th>\n              <th scope=\"col\"><b>Branch</b></th>\n              <th scope=\"col\"><b>Library Id</b></th>\n              <th scope=\"col\"><b>Year</b></th>\n              <th scope=\"col\"><b>Contact</b></th>\n              <th scope=\"col\"><b>Status</b></th>\n              <th scope=\"col\"><b>Role</b></th>\n            </tr>\n            </thead>\n            <tbody>\n\n            <tr>\n              <td>1</td>\n              <td>{{captain.data.name}}</td>\n              <td>{{captain.data.branch}}</td>\n              <td>{{captain.data.libId}}</td>\n              <td>{{captain.data.year}}</td>\n              <td>{{captain.data.phone}}</td>\n              <th scope=\"col\"><b>{{captain.status}}</b></th>\n              <td>{{captain.data.role}}</td>\n            </tr>\n            <tr *ngFor=\"let player of captain.data.team; let j = index\">\n              <td>{{j+2}}</td>\n              <td>{{player.name}}</td>\n              <td>{{player.branch}}</td>\n              <td>{{player.libId}}</td>\n              <td>{{player.year}}</td>\n              <td></td>\n              <td>{{player.role}}</td>\n            </tr>\n\n\n            </tbody>\n          </table>\n          </div>\n        </div>\n      </div>\n\n    </div>\n  </div>\n  <div style=\"margin-top: 20px; color: white\">\n    n\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -137,17 +137,14 @@ var AdminDetailsComponent = /** @class */ (function () {
     function AdminDetailsComponent(route, userService) {
         this.route = route;
         this.userService = userService;
-        this.collections = [];
-        this.status = [];
+        this.data = [];
     }
     AdminDetailsComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.route.params.subscribe(function (params) {
-            var details$ = _this.userService.getDetails(params['id']);
+            var details$ = _this.userService.getDetails(params['id'], params['name']);
             details$.subscribe(function (result) {
-                _this.collections = result.data.captainId;
-                _this.status = result.status;
-                console.log(_this.status);
+                _this.data = result.data;
             });
         });
     };
@@ -260,7 +257,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<app-admin-header></app-admin-header>\n<div class=\"container\">\n  <div style=\"text-align: center; margin-top: 5%\">\n    <h3>Games</h3>\n  </div>\n  <div class=\"row\" style=\"text-align: center; margin-top: 50px\">\n    <div class=\"col-sm-4\" *ngFor=\"let game of games\">\n      <div>\n        <a [routerLink]=\"[game._id]\" class=\"nav-link\"><p>{{game.name}}</p></a>\n      </div>\n    </div>\n  </div>\n</div>\n"
+module.exports = "<app-admin-header></app-admin-header>\n<div class=\"container\">\n  <div style=\"text-align: center; margin-top: 5%\">\n    <h3>Games</h3>\n  </div>\n  <div class=\"row\" style=\"text-align: center; margin-top: 50px\">\n    <div class=\"col-sm-4\" *ngFor=\"let game of games\">\n      <div>\n        <a [routerLink]=\"[game.type,game.name]\" class=\"nav-link\"><p>{{game.name}}</p></a>\n      </div>\n    </div>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -1747,6 +1744,7 @@ var PaymentComponent = /** @class */ (function () {
             var id = params['id'];
             _this.userService.getID(id).subscribe(function (data) {
                 if (data.success) {
+                    console.log('data --> ', data);
                     _this.data = data.data;
                     _this.payble = data.TXN_AMOUNT;
                     _this.paytm = data;
@@ -1999,7 +1997,7 @@ var myRoutes = [
         component: _admin_home_admin_home_component__WEBPACK_IMPORTED_MODULE_11__["AdminHomeComponent"]
     },
     {
-        path: 'admin/home/:id',
+        path: 'admin/home/:id/:name',
         canActivate: [_guard_auth_guard__WEBPACK_IMPORTED_MODULE_14__["AuthGuard"]],
         component: _admin_details_admin_details_component__WEBPACK_IMPORTED_MODULE_12__["AdminDetailsComponent"]
     },
@@ -2141,9 +2139,9 @@ var UserService = /** @class */ (function () {
             return pending;
         }));
     };
-    UserService.prototype.getDetails = function (data) {
+    UserService.prototype.getDetails = function (type, game) {
         var token = localStorage.getItem('USER_TOKEN');
-        return this.http.post('/admin/details', { data: data }, {
+        return this.http.post('/admin/details', { type: type, game: game }, {
             headers: { Authorization: 'Bearer ' + token }
         });
     };
@@ -2413,10 +2411,10 @@ var UserComponent = /** @class */ (function () {
             _this.names = result.data;
             _this.status = result.status;
             _this.amount = result.amount;
+            console.log('names --> ', _this.names);
+            console.log('status --> ', _this.status);
+            console.log('amount --> ', _this.amount);
         });
-    };
-    UserComponent.prototype.payAmount = function () {
-        this.userService.goPaytm({ CUST_ID: this.CUST_ID });
     };
     UserComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({

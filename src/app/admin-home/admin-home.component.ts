@@ -15,5 +15,4 @@ export class AdminHomeComponent implements OnInit {
       this.games = data.data;
     });
   }
-
 }

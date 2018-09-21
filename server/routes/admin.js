@@ -46,7 +46,7 @@ router.post('/login', (req,res) => {
 });
 
 router.get('/data',checkAuth, (req,res) => {
-  Game.find({},'name')
+  Game.find({},'name type')
     .then(result => {
       res.status(200).json({
         success: true,
@@ -55,101 +55,219 @@ router.get('/data',checkAuth, (req,res) => {
     })
     .catch(error => {
       console.log(error);
-      throw new error
+      // throw new error
     });
 });
 
+// new one
 router.post('/details', checkAuth , (req,res) => {
-  Game.findOne({_id: req.body.data},' type captainId ')
-    .populate('captainId')
-    .exec((err,captain) => {
-      console.log(captain);
-      if (captain.type === 'team') {
-        const teamArray = [];
+  console.log(req.body);
+  Captain.find({game: req.body.game})
+    .then(captains => {
+      console.log('capt --> ', captains);
+      const teamArray = [];
 
-        for(let status of captain.captainId) {
+      if (req.body.type === 'team') {
+
+        for (let captain of captains) {
           const status = 'Not required';
-          teamArray.push(status);
-          if(teamArray.length === captain.captainId.length){
+
+          const obj = {
+            data: captain,
+            team: captain.team,
+            status: status
+          };
+          teamArray.push(obj);
+          if (teamArray.length === captains.length) {
             return res.status(200).json({
               success: true,
-              data: captain,
-              status: teamArray
+              data: teamArray,
             });
           }
         }
-
       }
-      else{
-        const array = [];
-        for(let captains of captain.captainId) {
-          Captain.findOne({_id: captains._id},'name team game type payment_status')
-            .then(result => {
-              let last_id;
-              console.log('length --> ', result.payment_status.length);
-              if (result.payment_status.length) {
-                console.log('reachxessesf');
-                const length = result.payment_status.length;
-                last_id = result.payment_status[length - 1];
+      else {
+        console.log('captain --> ', captains.length);
+        for (let captain of captains) {
+
+          let last_id;
+          if (captain.payment_status.length) {
+            const length = captain.payment_status.length;
+            last_id = captain.payment_status[length - 1];
+          }
+          else {
+            last_id = null;
+          }
+          console.log('last --> ', last_id);
+          Payment.findOne({_id: last_id})
+            .then(pay => {
+              if (pay) {
+                const url = 'https://www.kiet.edu/erp-apis/index.php/payment/order_status/' + pay.ORDERID;
+
+                axios.get(url)
+                  .then(value => {
+
+                    const status = value.data.STATUS;
+                    const amount = value.data.TXN_AMOUNT;
+                    if (amount >= 68) {
+                      const obj = {
+                        data: captain,
+                        team: captain.team,
+                        status: status
+                      };
+                      teamArray.push(obj);
+                      console.log('array 1 --> ', teamArray.length);
+                      if (teamArray.length === captains.length) {
+                        res.status(200).json({
+                          success: true,
+                          data: teamArray,
+                        });
+                      }
+                    }
+                    else {
+
+                      const status = 'TXN_FAILURE';
+
+                      const obj = {
+                        data: captain,
+                        team: captain.team,
+                        status: status
+                      };
+                      teamArray.push(obj);
+                      console.log('array 2 --> ', teamArray.length);
+                      if (teamArray.length === captains.length) {
+                        res.status(200).json({
+                          success: true,
+                          data: teamArray,
+                        });
+                      }
+                    }
+                  });
+
               }
               else {
-                console.log('reach');
-                last_id = null;
+                const status = 'TXN_FAILURE';
+
+                const obj = {
+                  data: captain,
+                  team: captain.team,
+                  status: status
+                };
+
+                teamArray.push(obj);
+                console.log('array 3 --> ', teamArray.length);
+                if (teamArray.length === captains.length) {
+                  console.log(teamArray);
+                  res.status(200).json({
+                    success: true,
+                    data: teamArray,
+                  });
+                }
               }
-
-              console.log('lstID --> ', last_id);
-              Payment.findOne({_id: last_id})
-                .then(pay => {
-                  if (pay) {
-                    const url = 'https://www.kiet.edu/erp-apis/index.php/payment/order_status/' + pay.ORDERID;
-
-                    axios.get(url)
-                      .then(value => {
-
-                        const status = value.data.STATUS;
-                        const amount = value.data.TXN_AMOUNT;
-                        if (amount >= 68) {
-                          array.push(status);
-                          if (array.length === captain.captainId.length) {
-                            console.log('array --> ', array);
-                            res.status(200).json({
-                              success: true,
-                              data: captain,
-                              status: array
-                            });
-                          }
-                        }
-                        else {
-                          array.push("TXN_FAILURE");
-                          if (array.length === captain.captainId.length) {
-                            console.log('array --> ', array);
-                            res.status(200).json({
-                              success: true,
-                              data: captain,
-                              status: array
-                            });
-                          }
-                        }
-                      });
-                  }
-                  else {
-                    const status = 'TXN_FAILURE';
-                    array.push(status);
-                    if(array.length === captain.captainId.length){
-                      console.log(array);
-                      res.status(200).json({
-                        success: true,
-                        data: captain,
-                        status: array
-                      });
-                    }
-                  }
-                });
             })
         }
       }
+    })
+    .catch(error => {
+      console.log(error);
+      // throw new error;
     });
 });
+// old one
+
+
+// router.post('/details', checkAuth , (req,res) => {
+//   console.log('data --> ', req.body.data);
+//   // Game.findOne({_id: req.body.data},' type captainId ')
+//   //   .populate('captainId')
+//   //   .exec((err,captain) => {
+//   //     console.log(captain);
+//       if (captain.type === 'team') {
+//         const teamArray = [];
+//
+//         for(let status of captain.captainId) {
+//           const status = 'Not required';
+//           teamArray.push(status);
+//           if(teamArray.length === captain.captainId.length){
+//             return res.status(200).json({
+//               success: true,
+//               data: captain,
+//               status: teamArray
+//             });
+//           }
+//         }
+//
+//       }
+//   //     else{
+//   //       const array = [];
+//   //       for(let captains of captain.captainId) {
+//   //         Captain.findOne({_id: captains._id},'name team game type payment_status')
+//   //           .then(result => {
+//   //             let last_id;
+//   //             console.log('length --> ', result.payment_status.length);
+//   //             if (result.payment_status.length) {
+//   //               console.log('reachxessesf');
+//   //               const length = result.payment_status.length;
+//   //               last_id = result.payment_status[length - 1];
+//   //             }
+//   //             else {
+//   //               console.log('reach');
+//   //               last_id = null;
+//   //             }
+//   //
+//   //             console.log('lstID --> ', last_id);
+//   //             Payment.findOne({_id: last_id})
+//   //               .then(pay => {
+//   //                 if (pay) {
+//   //                   const url = 'https://www.kiet.edu/erp-apis/index.php/payment/order_status/' + pay.ORDERID;
+//   //
+//   //                   axios.get(url)
+//   //                     .then(value => {
+//   //
+//   //                       const status = value.data.STATUS;
+//   //                       const amount = value.data.TXN_AMOUNT;
+//   //                       if (amount >= 68) {
+//   //                         array.push(status);
+//   //                         if (array.length === captain.captainId.length) {
+//   //                           console.log('array --> ', array);
+//   //                           res.status(200).json({
+//   //                             success: true,
+//   //                             data: captain,
+//   //                             status: array
+//   //                           });
+//   //                         }
+//   //                       }
+//   //                       else {
+//   //                         array.push("TXN_FAILURE");
+//   //                         if (array.length === captain.captainId.length) {
+//   //                           console.log('array --> ', array);
+//   //                           res.status(200).json({
+//   //                             success: true,
+//   //                             data: captain,
+//   //                             status: array
+//   //                           });
+//   //                         }
+//   //                       }
+//   //                     });
+//   //                 }
+//   //                 else {
+//   //                   const status = 'TXN_FAILURE';
+//   //                   array.push(status);
+//   //                   if(array.length === captain.captainId.length){
+//   //                     console.log(array);
+//   //                     res.status(200).json({
+//   //                       success: true,
+//   //                       data: captain,
+//   //                       status: array
+//   //                     });
+//   //                   }
+//   //                 }
+//   //               });
+//   //           })
+//   //       }
+//   //     }
+//   //   });
+// });
 
 router.get('/captainList', (req,res) => {
   CaptainList.find()
@@ -158,7 +276,7 @@ router.get('/captainList', (req,res) => {
     })
     .catch(error => {
       console.log(error);
-      throw new error;
+      // throw new error;
     })
 });
 

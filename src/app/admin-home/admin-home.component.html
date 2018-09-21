@@ -6,7 +6,7 @@
   <div class="row" style="text-align: center; margin-top: 50px">
     <div class="col-sm-4" *ngFor="let game of games">
       <div>
-        <a [routerLink]="[game._id]" class="nav-link"><p>{{game.name}}</p></a>
+        <a [routerLink]="[game.type,game.name]" class="nav-link"><p>{{game.name}}</p></a>
       </div>
     </div>
   </div>

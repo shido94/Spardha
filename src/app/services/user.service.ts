@@ -53,9 +53,9 @@ export class UserService {
     );
   }
 
-  getDetails(data) {
+  getDetails(type, game) {
     const token = localStorage.getItem('USER_TOKEN');
-    return this.http.post<any>('/admin/details', {data}, {
+    return this.http.post<any>('/admin/details', {type, game}, {
       headers: {Authorization: 'Bearer ' + token}
     });
   }
