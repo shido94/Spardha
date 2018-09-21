@@ -13,6 +13,7 @@ const async = require('async');
 
 const captainAuth = require('../model/captain');
 const Payment = require('../model/payment');
+const Error = require('../model/errors');
 
 const APP_KEY = 'SPORTS_18_SJSHUU';
 // var CUST_ID = '';
@@ -750,7 +751,6 @@ router.post('/login', (req,res) => {
       throw error;
     });
 });
-
 router.get('/paytm_data', (req,res) => {
   const obj = req.query.amount;
   const paytm = JSON.parse(obj);
@@ -812,6 +812,12 @@ router.post('/paytm_response', (req,res) => {
     })
     .catch(error => {
       console.log(error);
+      const errors = new Error({
+        type: error
+      });
+      error.save((err,result) => {
+        console.log(result);
+      });
     });
 });
 

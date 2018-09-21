@@ -21,6 +21,7 @@ export class PaymentComponent implements OnInit {
       const id = params['id'];
       this.userService.getID(id).subscribe(data => {
         if (data.success) {
+          console.log('data --> ', data);
           this.data = data.data;
           this.payble = data.TXN_AMOUNT;
           this.paytm = data;

@@ -73,4 +73,3 @@ db.once('open', function() {
   server.listen(1337,"0.0.0.0");
 });
 
-

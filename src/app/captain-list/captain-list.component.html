@@ -1,0 +1,32 @@
+<app-admin-header></app-admin-header>
+<div style="text-align: center; margin-top: 10px">
+  <h4>Captains Details</h4>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="table-responsive">
+
+      <table class="table">
+        <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Library Id</th>
+          <th scope="col">Game</th>
+          <th scope="col">Verification Code</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let captain of captains; let i = index">
+          <th scope="row">{{i+1}}</th>
+          <td>{{captain.libId}}</td>
+          <td>{{captain.game}}</td>
+          <td>{{captain.uniqueId}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <br>
+  <br>
+</div>
+

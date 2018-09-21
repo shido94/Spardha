@@ -34,9 +34,9 @@ export class UserComponent implements OnInit {
       this.amount = result.amount;
     });
   }
-
-  payAmount() {
-    this.userService.goPaytm({CUST_ID: this.CUST_ID});
-  }
+  //
+  // payAmount() {
+  //   this.userService.goPaytm({CUST_ID: this.CUST_ID});
+  // }
 
 }
