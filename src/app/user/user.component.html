@@ -33,7 +33,7 @@
         <td *ngIf="name.status === 'TXN_SUCCESS' && name.amount >= 68 && name.captain.type === 'individual'">PAID</td>
         <td *ngIf="name.status === 'TXN_SUCCESS' && name.amount < 68 && name.captain.type === 'individual'">UNPAID</td>
 
-        <td *ngIf="name.type === 'team'">Not Required</td>
+        <td *ngIf="name.captain.type === 'team'">Not Required</td>
         <td *ngIf="name.status === 'TXN_FAILURE' && name.captain.type === 'individual'"><a  [routerLink]="['/payment', name.captain._id]">Pay Again</a></td>
         <td *ngIf="name.status === 'PENDING' && name.captain.type === 'individual'"><a (click)="refreshButton()" routerLink="#">Refresh</a></td>
         <td *ngIf="name.status === 'TXN_SUCCESS' && name.amount >= 68 && name.captain.type === 'individual'"></td>
