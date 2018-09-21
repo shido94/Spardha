@@ -33,7 +33,12 @@
               <td>{{captain.data.libId}}</td>
               <td>{{captain.data.year}}</td>
               <td>{{captain.data.phone}}</td>
-              <th scope="col"><b>{{captain.status}}</b></th>
+
+              <th scope="col" *ngIf="captain.status === 'TXN_SUCCESS'"><b>PAID</b></th>
+              <th scope="col" *ngIf="captain.status === 'TXN_FAILURE'"><b>UNPAID</b></th>
+              <th scope="col" *ngIf="captain.status === 'PENDING'"><b>PENDING</b></th>
+
+
               <td>{{captain.data.role}}</td>
             </tr>
             <tr *ngFor="let player of captain.data.team; let j = index">
