@@ -37,7 +37,7 @@
               <th scope="col" *ngIf="captain.status === 'TXN_SUCCESS'"><b>PAID</b></th>
               <th scope="col" *ngIf="captain.status === 'TXN_FAILURE'"><b>UNPAID</b></th>
               <th scope="col" *ngIf="captain.status === 'PENDING'"><b>PENDING</b></th>
-
+              <th scope="col" *ngIf="captain.data.type === 'team'">--</th>
 
               <td>{{captain.data.role}}</td>
             </tr>
@@ -47,6 +47,7 @@
               <td>{{player.branch}}</td>
               <td>{{player.libId}}</td>
               <td>{{player.year}}</td>
+              <td></td>
               <td></td>
               <td>{{player.role}}</td>
             </tr>
