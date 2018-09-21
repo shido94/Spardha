@@ -683,7 +683,6 @@ router.post('/refresh-event',checkAuth , (req,res) => {
     .then(result => {
       const refreshArray = [];
       for(let person of result) {
-        console.log('person --> ', person);
         let last_id;
         if(person.payment_status.length) {
           const length = person.payment_status.length;
