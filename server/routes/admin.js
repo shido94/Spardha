@@ -61,10 +61,8 @@ router.get('/data',checkAuth, (req,res) => {
 
 // new one
 router.post('/details', checkAuth , (req,res) => {
-  console.log(req.body);
   Captain.find({game: req.body.game})
     .then(captains => {
-      console.log('capt --> ', captains);
       const teamArray = [];
 
       if (req.body.type === 'team') {
@@ -87,7 +85,6 @@ router.post('/details', checkAuth , (req,res) => {
         }
       }
       else {
-        console.log('captain --> ', captains.length);
         for (let captain of captains) {
 
           let last_id;
@@ -98,7 +95,6 @@ router.post('/details', checkAuth , (req,res) => {
           else {
             last_id = null;
           }
-          console.log('last --> ', last_id);
           Payment.findOne({_id: last_id})
             .then(pay => {
               if (pay) {
@@ -116,7 +112,6 @@ router.post('/details', checkAuth , (req,res) => {
                         status: status
                       };
                       teamArray.push(obj);
-                      console.log('array 1 --> ', teamArray.length);
                       if (teamArray.length === captains.length) {
                         res.status(200).json({
                           success: true,
@@ -134,7 +129,6 @@ router.post('/details', checkAuth , (req,res) => {
                         status: status
                       };
                       teamArray.push(obj);
-                      console.log('array 2 --> ', teamArray.length);
                       if (teamArray.length === captains.length) {
                         res.status(200).json({
                           success: true,
@@ -155,9 +149,7 @@ router.post('/details', checkAuth , (req,res) => {
                 };
 
                 teamArray.push(obj);
-                console.log('array 3 --> ', teamArray.length);
                 if (teamArray.length === captains.length) {
-                  console.log(teamArray);
                   res.status(200).json({
                     success: true,
                     data: teamArray,
