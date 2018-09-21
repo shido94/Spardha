@@ -30,7 +30,7 @@
         <td *ngIf="name.captain.type === 'team'"></td>
         <td *ngIf="name.status === 'TXN_FAILURE' && name.captain.type === 'individual'">UNPAID</td>
         <td *ngIf="name.status === 'PENDING' && name.captain.type === 'individual'">PENDING</td>
-        <td *ngIf="name.status === 'TXN_SUCCESS' && name.captain.amount >= 68 && name.captain.type === 'individual'">PAID</td>
+        <td *ngIf="name.status === 'TXN_SUCCESS' && name.amount >= 68 && name.captain.type === 'individual'">PAID</td>
         <td *ngIf="name.status === 'TXN_SUCCESS' && name.amount < 68 && name.captain.type === 'individual'">UNPAID</td>
 
         <td *ngIf="name.type === 'team'"></td>
