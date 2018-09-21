@@ -2353,7 +2353,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<app-header></app-header>\n\n<div style=\"text-align: center; margin-top: 10px\">\n  <h4>Your registered team</h4>\n</div>\n<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"table-responsive\">\n\n    <table class=\"table\">\n      <thead>\n      <tr>\n        <th scope=\"col\">#</th>\n        <th scope=\"col\">Captain Name</th>\n        <th scope=\"col\">Game</th>\n        <th scope=\"col\">Team Member</th>\n        <th scope=\"col\">Amount</th>\n        <th scope=\"col\">Check</th>\n        <!--<th scope=\"col\"><button (click)=\"refreshButton()\" class=\"btn btn-danger\">Refresh</button></th>-->\n      </tr>\n      </thead>\n      <tbody>\n\n      <tr *ngFor=\"let name of names; let i = index\">\n        <th scope=\"row\">{{i+1}}</th>\n        <td>{{name.name}}</td>\n        <td>{{name.game}}</td>\n        <td>{{name.team.length+1}}</td>\n\n        <td *ngIf=\"name.type === 'team'\"></td>\n        <td *ngIf=\"status[i] === 'TXN_FAILURE' && name.type === 'individual'\">UNPAID</td>\n        <td *ngIf=\"status[i] === 'PENDING' && name.type === 'individual'\">PENDING</td>\n        <td *ngIf=\"status[i] === 'TXN_SUCCESS' && amount[i] >= 68 && name.type === 'individual'\">PAID</td>\n        <td *ngIf=\"status[i] === 'TXN_SUCCESS' && amount[i] < 68 && name.type === 'individual'\">UNPAID</td>\n\n        <td *ngIf=\"name.type === 'team'\"></td>\n        <td *ngIf=\"status[i] === 'TXN_FAILURE' && name.type === 'individual'\"><a  [routerLink]=\"['/payment', name._id]\">Pay Again</a></td>\n        <td *ngIf=\"status[i] === 'PENDING' && name.type === 'individual'\"><a (click)=\"refreshButton()\" routerLink=\"#\">Refresh</a></td>\n        <td *ngIf=\"status[i] === 'TXN_SUCCESS' && amount[i] >= 68 && name.type === 'individual'\"></td>\n        <td *ngIf=\"status[i] === 'TXN_SUCCESS' && amount[i] < 68 && name.type === 'individual'\"><a  [routerLink]=\"['/payment', name._id]\">Pay Again</a></td>\n\n      </tr>\n      </tbody>\n    </table>\n    </div>\n  </div>\n  <br>\n  <br>\n  <div><b>Note</b>--> Please Click on Refresh after some time, If the <b>Payment Status</b> is <b>PENDING</b></div>\n</div>\n\n"
+module.exports = "<app-header></app-header>\n\n<div style=\"text-align: center; margin-top: 10px\">\n  <h4>Your registered team</h4>\n</div>\n<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"table-responsive\">\n\n    <table class=\"table\">\n      <thead>\n      <tr>\n        <th scope=\"col\">#</th>\n        <th scope=\"col\">Captain Name</th>\n        <th scope=\"col\">Game</th>\n        <th scope=\"col\">Team Member</th>\n        <th scope=\"col\">Amount</th>\n        <th scope=\"col\">Check</th>\n        <!--<th scope=\"col\"><button (click)=\"refreshButton()\" class=\"btn btn-danger\">Refresh</button></th>-->\n      </tr>\n      </thead>\n      <tbody>\n\n      <tr *ngFor=\"let name of names; let i = index\">\n        <th scope=\"row\">{{i+1}}</th>\n        <td>{{name.captain.name}}</td>\n        <td>{{name.captain.game}}</td>\n        <td>{{name.captain.team.length+1}}</td>\n\n        <td *ngIf=\"name.captain.type === 'team'\"></td>\n        <td *ngIf=\"name.status === 'TXN_FAILURE' && name.captain.type === 'individual'\">UNPAID</td>\n        <td *ngIf=\"name.status === 'PENDING' && name.captain.type === 'individual'\">PENDING</td>\n        <td *ngIf=\"name.status === 'TXN_SUCCESS' && name.captain.amount >= 68 && name.captain.type === 'individual'\">PAID</td>\n        <td *ngIf=\"name.status === 'TXN_SUCCESS' && name.amount < 68 && name.captain.type === 'individual'\">UNPAID</td>\n\n        <td *ngIf=\"name.type === 'team'\"></td>\n        <td *ngIf=\"name.status === 'TXN_FAILURE' && name.captain.type === 'individual'\"><a  [routerLink]=\"['/payment', name.captain._id]\">Pay Again</a></td>\n        <td *ngIf=\"name.status === 'PENDING' && name.captain.type === 'individual'\"><a (click)=\"refreshButton()\" routerLink=\"#\">Refresh</a></td>\n        <td *ngIf=\"name.status === 'TXN_SUCCESS' && name.amount >= 68 && name.captain.type === 'individual'\"></td>\n        <td *ngIf=\"name.status === 'TXN_SUCCESS' && name.amount < 68 && name.captain.type === 'individual'\"><a  [routerLink]=\"['/payment', name.captain._id]\">Pay Again</a></td>\n\n      </tr>\n      </tbody>\n    </table>\n    </div>\n  </div>\n  <br>\n  <br>\n  <div><b>Note</b>--> Please Click on Refresh after some time, If the <b>Payment Status</b> is <b>PENDING</b></div>\n</div>\n\n"
 
 /***/ }),
 
@@ -2391,8 +2391,6 @@ var UserComponent = /** @class */ (function () {
         this.userService = userService;
         this.route = route;
         this.names = [];
-        this.status = [];
-        this.amount = [];
         this.CUST_ID = '';
     }
     UserComponent.prototype.ngOnInit = function () {
@@ -2409,11 +2407,6 @@ var UserComponent = /** @class */ (function () {
         var refresh$ = this.userService.refreshData();
         refresh$.subscribe(function (result) {
             _this.names = result.data;
-            _this.status = result.status;
-            _this.amount = result.amount;
-            console.log('names --> ', _this.names);
-            console.log('status --> ', _this.status);
-            console.log('amount --> ', _this.amount);
         });
     };
     UserComponent = __decorate([

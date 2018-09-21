@@ -23,21 +23,21 @@
 
       <tr *ngFor="let name of names; let i = index">
         <th scope="row">{{i+1}}</th>
-        <td>{{name.name}}</td>
-        <td>{{name.game}}</td>
-        <td>{{name.team.length+1}}</td>
+        <td>{{name.captain.name}}</td>
+        <td>{{name.captain.game}}</td>
+        <td>{{name.captain.team.length+1}}</td>
+
+        <td *ngIf="name.captain.type === 'team'"></td>
+        <td *ngIf="name.status === 'TXN_FAILURE' && name.captain.type === 'individual'">UNPAID</td>
+        <td *ngIf="name.status === 'PENDING' && name.captain.type === 'individual'">PENDING</td>
+        <td *ngIf="name.status === 'TXN_SUCCESS' && name.captain.amount >= 68 && name.captain.type === 'individual'">PAID</td>
+        <td *ngIf="name.status === 'TXN_SUCCESS' && name.amount < 68 && name.captain.type === 'individual'">UNPAID</td>
 
         <td *ngIf="name.type === 'team'"></td>
-        <td *ngIf="status[i] === 'TXN_FAILURE' && name.type === 'individual'">UNPAID</td>
-        <td *ngIf="status[i] === 'PENDING' && name.type === 'individual'">PENDING</td>
-        <td *ngIf="status[i] === 'TXN_SUCCESS' && amount[i] >= 68 && name.type === 'individual'">PAID</td>
-        <td *ngIf="status[i] === 'TXN_SUCCESS' && amount[i] < 68 && name.type === 'individual'">UNPAID</td>
-
-        <td *ngIf="name.type === 'team'"></td>
-        <td *ngIf="status[i] === 'TXN_FAILURE' && name.type === 'individual'"><a  [routerLink]="['/payment', name._id]">Pay Again</a></td>
-        <td *ngIf="status[i] === 'PENDING' && name.type === 'individual'"><a (click)="refreshButton()" routerLink="#">Refresh</a></td>
-        <td *ngIf="status[i] === 'TXN_SUCCESS' && amount[i] >= 68 && name.type === 'individual'"></td>
-        <td *ngIf="status[i] === 'TXN_SUCCESS' && amount[i] < 68 && name.type === 'individual'"><a  [routerLink]="['/payment', name._id]">Pay Again</a></td>
+        <td *ngIf="name.status === 'TXN_FAILURE' && name.captain.type === 'individual'"><a  [routerLink]="['/payment', name.captain._id]">Pay Again</a></td>
+        <td *ngIf="name.status === 'PENDING' && name.captain.type === 'individual'"><a (click)="refreshButton()" routerLink="#">Refresh</a></td>
+        <td *ngIf="name.status === 'TXN_SUCCESS' && name.amount >= 68 && name.captain.type === 'individual'"></td>
+        <td *ngIf="name.status === 'TXN_SUCCESS' && name.amount < 68 && name.captain.type === 'individual'"><a  [routerLink]="['/payment', name.captain._id]">Pay Again</a></td>
 
       </tr>
       </tbody>

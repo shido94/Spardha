@@ -10,8 +10,6 @@ import {ActivatedRoute} from '@angular/router';
 })
 export class UserComponent implements OnInit {
   names = [];
-  status = [];
-  amount = [];
   CUST_ID = '';
   // amount: number;
 
@@ -30,12 +28,6 @@ export class UserComponent implements OnInit {
     const refresh$ = this.userService.refreshData();
     refresh$.subscribe(result => {
       this.names = result.data;
-      this.status = result.status;
-      this.amount = result.amount;
-      console.log('names --> ' , this.names);
-      console.log('status --> ' , this.status);
-      console.log('amount --> ' , this.amount);
-
     });
   }
   //

@@ -141,8 +141,6 @@ router.post('/register', (req,res) => {
   }
 });
 
-
-
 router.post('/member', checkAuth , (req,res) => {
   const player = req.body.itemRows;
 
@@ -677,14 +675,15 @@ router.post('/paytm_response', (req,res) => {
     });
 });
 
+// for try
 
 router.post('/refresh-event',checkAuth , (req,res) => {
 
   Captain.find({libId: req.userData.libId, game: req.userData.game},'name team game type payment_status')
     .then(result => {
       const refreshArray = [];
-      const amountArray = [];
       for(let person of result) {
+        console.log('person --> ', person);
         let last_id;
         if(person.payment_status.length) {
           const length = person.payment_status.length;
@@ -728,17 +727,20 @@ router.post('/refresh-event',checkAuth , (req,res) => {
                         }
                         else {
                           const status = value.data.STATUS;
-                          refreshArray.push(status);
                           const amountInt = parseInt(value.data.TXNAMOUNT);
-                          amountArray.push(amountInt);
+
+                          const obj = {
+                            status: status,
+                            amount: amountInt,
+                            captain: person
+                          };
+
+                          refreshArray.push(obj);
+
                           if(refreshArray.length === result.length) {
-                            console.log('status-- > ', status);
-                            console.log('amountArray-- > ', amountArray);
                             return res.status(200).json({
                               success: true,
-                              data: result,
-                              status: refreshArray,
-                              amount: amountArray
+                              data: refreshArray
                             });
                           }
                         }
@@ -755,16 +757,17 @@ router.post('/refresh-event',checkAuth , (req,res) => {
               else{
                 status = 'TXN_FAILURE'; // 'TXN_FAILURE'
               }
-              refreshArray.push(status);
-              amountArray.push(1);
+
+              const obj = {
+                status: status,
+                amount: 1,
+                captain: person
+              };
+              refreshArray.push(obj);
               if(refreshArray.length === result.length) {
-                console.log('statusArray-- > ', status);
-                console.log('amount-- > ', amountArray);
                 return res.status(200).json({
                   success: true,
-                  data: result,
-                  status: refreshArray,
-                  amount: amountArray
+                  data: refreshArray
                 });
               }
             }
@@ -777,6 +780,110 @@ router.post('/refresh-event',checkAuth , (req,res) => {
       // throw new error;
     });
 });
+
+
+// ORIGINAL
+
+// router.post('/refresh-event',checkAuth , (req,res) => {
+//
+//   Captain.find({libId: req.userData.libId, game: req.userData.game},'name team game type payment_status')
+//     .then(result => {
+//       const refreshArray = [];
+//       const amountArray = [];
+//       for(let person of result) {
+//         let last_id;
+//         if(person.payment_status.length) {
+//           const length = person.payment_status.length;
+//           last_id = person.payment_status[length - 1];
+//         }
+//         else{
+//           last_id = null;
+//         }
+//
+//         Payment.findOne({_id: last_id})
+//           .then(pay => {
+//             if (pay) {
+//               const url = 'https://www.kiet.edu/erp-apis/index.php/payment/order_status/' + pay.ORDERID;
+//
+//               axios.get(url)
+//                 .then(value => {
+//
+//                   const sendData = {
+//                     ORDERID: value.data.ORDERID,
+//                     TXNAMOUNT: value.data.TXNAMOUNT,
+//                     STATUS: value.data.STATUS,
+//                     REGISTRATION_ID: person._id
+//                   };
+//
+//                   const payment = new Payment(sendData);
+//                   payment.save((err, done) => {
+//                     if (err) {
+//                       console.log(err);
+//                       // throw new err;
+//                     }
+//                     else {
+//
+//                       Captain.updateOne({_id: person._id}, {
+//                         $push: {
+//                           payment_status: done._id
+//                         }
+//                       }, (err, update) => {
+//                         if (err) {
+//                           console.log(err);
+//                           // throw new err;
+//                         }
+//                         else {
+//                           const status = value.data.STATUS;
+//                           refreshArray.push(status);
+//                           const amountInt = parseInt(value.data.TXNAMOUNT);
+//                           amountArray.push(amountInt);
+//                           if(refreshArray.length === result.length) {
+//                             console.log('status-- > ', status);
+//                             console.log('amountArray-- > ', amountArray);
+//                             return res.status(200).json({
+//                               success: true,
+//                               data: result,
+//                               status: refreshArray,
+//                               amount: amountArray
+//                             });
+//                           }
+//                         }
+//                       });
+//                     }
+//                   });
+//                 });
+//             }
+//             else {
+//               let status;
+//               if(person.type === 'team'){
+//                 status = 'No payment required';
+//               }
+//               else{
+//                 status = 'TXN_FAILURE'; // 'TXN_FAILURE'
+//               }
+//               refreshArray.push(status);
+//               amountArray.push(1);
+//               if(refreshArray.length === result.length) {
+//                 console.log('statusArray-- > ', status);
+//                 console.log('amount-- > ', amountArray);
+//                 return res.status(200).json({
+//                   success: true,
+//                   data: result,
+//                   status: refreshArray,
+//                   amount: amountArray
+//                 });
+//               }
+//             }
+//           });
+//       }
+//
+//     })
+//     .catch(error => {
+//       console.log(error);
+//       // throw new error;
+//     });
+// });
+
 
 // router.get('/hello', (req,res) => {
 //   Captain.find()
