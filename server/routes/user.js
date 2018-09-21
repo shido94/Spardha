@@ -1007,26 +1007,26 @@ router.post('/refresh-event',checkAuth , (req,res) => {
     });
 });
 
-router.get('/hello', (req,res) => {
-  Captain.find()
-    .then(result=> {
-      // console.log(result);
-      result.forEach(libId => {
-        const lower = libId.libId.toUpperCase();
-        // console.log(lower);
-        Captain.updateOne({_id: libId._id}, {
-          $set: {
-            libId: lower
-          }
-        },(err,result) => {
-          console.log(result);
-        });
-      });
-    })
-    .catch(error => {
-      // throw new error
-      }
-    );
-});
+// router.get('/hello', (req,res) => {
+//   Captain.find()
+//     .then(result=> {
+//       // console.log(result);
+//       result.forEach(libId => {
+//         const lower = libId.libId.toUpperCase();
+//         // console.log(lower);
+//         Captain.updateOne({_id: libId._id}, {
+//           $set: {
+//             libId: lower
+//           }
+//         },(err,result) => {
+//           console.log(result);
+//         });
+//       });
+//     })
+//     .catch(error => {
+//       // throw new error
+//       }
+//     );
+// });
 
 module.exports = router;

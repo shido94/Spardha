@@ -102,13 +102,13 @@ router.post('/details', checkAuth , (req,res) => {
           Payment.findOne({_id: last_id})
             .then(pay => {
               if (pay) {
-                const url = 'https://www.kiet.edu/erp-apis/index.php/payment/order_status/' + pay.ORDERID;
+                // const url = 'https://www.kiet.edu/erp-apis/index.php/payment/order_status/' + pay.ORDERID;
 
-                axios.get(url)
-                  .then(value => {
+                // axios.get(url)
+                //   .then(value => {
 
-                    const status = value.data.STATUS;
-                    const amount = value.data.TXN_AMOUNT;
+                    const status = pay.STATUS;
+                    const amount = pay.TXNAMOUNT;
                     if (amount >= 68) {
                       const obj = {
                         data: captain,
@@ -142,7 +142,7 @@ router.post('/details', checkAuth , (req,res) => {
                         });
                       }
                     }
-                  });
+                  // });
 
               }
               else {
