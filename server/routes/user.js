@@ -143,335 +143,345 @@ router.post('/register', (req,res) => {
 
 router.post('/member', checkAuth , (req,res) => {
   const player = req.body.itemRows;
+  console.log('player -- >', req.userData);
+  Captain.findOne({libId: req.userData.libId})
+    .then(findYear => {
+      const year4 = findYear.year;
+      const year3 = year4-1;
+      const year2 = year3-1;
+      let year = [];
+      let ID = [];
 
-  let year = [];
-  let ID = [];
+      let playerData = [];
 
-  let playerData = [];
+      // const url = 'https://www.kiet.edu/erp-apis/index.php/verify/libid/' + sub;
+      let playerId = [];
 
-  // const url = 'https://www.kiet.edu/erp-apis/index.php/verify/libid/' + sub;
-  let playerId = [];
+      // add libId to an array to send to kiet server
+      player.forEach(id => {
+        playerId.push(id.libId);
+      });
 
-  // add libId to an array to send to kiet server
-  player.forEach(id => {
-    playerId.push(id.libId);
-  });
+      if(req.userData.type === 'individual' && playerId[0] == null) {
+        return res.status(200).json({
+          id: req.userData.userId,
+          success: true,
+          type: 'individual',
+          message: 'Your have successfully registered'
+        });
+      }
+      else{
+        if(req.userData.type === 'team' && playerId[0] == null) {
+          return res.status(200).json({
+            success: false,
+            type: 'team',
+            message: 'You have to enter a team'
+          })
+        }
+        else{
+          axios.get('https://www.kiet.edu/erp-apis/index.php/verify/libid/'+playerId)
+            .then(data => {
+              let i = 0;
+              for(let value of data.data) {
+                if(value.Name !== undefined) {
+                  let data = {
+                    name: value.Name,
+                    gender: value.Gender,
+                    year: value.year,
+                    branch: value.Dept,
+                    libId: playerId[i]
+                  };
+                  playerData.push(data);
+                  i++;
+                }
+                else{
+                  return res.status(200).json({
+                    success: false,
+                    message: 'Library Id '+ playerId[i] + ' is wrong'
+                  });
+                  break;
+                }
+              }
 
-  if(req.userData.type === 'individual' && playerId[0] == null) {
-    return res.status(200).json({
-      id: req.userData.userId,
-      success: true,
-      type: 'individual',
-      message: 'Your have successfully registered'
-    });
-  }
-  else{
-    if(req.userData.type === 'team' && playerId[0] == null) {
-      return res.status(200).json({
-        success: false,
-        type: 'team',
-        message: 'You have to enter a team'
-      })
-    }
-    else{
-      axios.get('https://www.kiet.edu/erp-apis/index.php/verify/libid/'+playerId)
-        .then(data => {
-          let i = 0;
-          for(let value of data.data) {
-            if(value.Name !== undefined) {
-              let data = {
-                name: value.Name,
-                gender: value.Gender,
-                year: value.year,
-                branch: value.Dept,
-                libId: playerId[i]
-              };
-              playerData.push(data);
-              i++;
-            }
-            else{
-              return res.status(200).json({
-                success: false,
-                message: 'Library Id '+ playerId[i] + ' is wrong'
+              for(let user of player){
+                if(req.userData.libId === user.libId) {
+                  return res.status(200).json({
+                    success: false,
+                    message: 'Please check captain cannot registered as a team member'
+                  });
+                  break;
+                }
+              }
+
+
+              player.forEach(players => {
+                ID.push(players.libId);
               });
-              break;
-            }
-          }
+              const counts = {};
+              for (let i = 0; i < ID.length; i++) {
+                let num = ID[i];
+                counts[num] = counts[num] ? counts[num] + 1 : 1;
+              }
+              for(let user of player) {
+                if(counts[user.libId] > 1){
+                  return res.status(200).json({
+                    success: false,
+                    message: 'Library Id ' +user.libId +' should be entered one time'
+                  });
+                  break;
+                }
+              }
 
-          for(let user of player){
-            if(req.userData.libId === user.libId) {
-              return res.status(200).json({
-                success: false,
-                message: 'Please check captain cannot registered as a team member'
-              });
-              break;
-            }
-          }
+              Game.findOne({name: req.userData.game})
+                .then(game => {
 
+                  Captain.findOne({_id: req.userData.userId})
+                    .then(Isgirl => {
+                      let total = [];
 
-          player.forEach(players => {
-            ID.push(players.libId);
-          });
-          const counts = {};
-          for (let i = 0; i < ID.length; i++) {
-            let num = ID[i];
-            counts[num] = counts[num] ? counts[num] + 1 : 1;
-          }
-          for(let user of player) {
-            if(counts[user.libId] > 1){
-              return res.status(200).json({
-                success: false,
-                message: 'Library Id ' +user.libId +' should be entered one time'
-              });
-              break;
-            }
-          }
+                      if(game.type === 'team' && Isgirl.gender === 'FEMALE') {
 
-          Game.findOne({name: req.userData.game})
-            .then(game => {
+                        // Can be change if not working
 
-              Captain.findOne({_id: req.userData.userId})
-                .then(Isgirl => {
-                  let total = [];
+                        for(let user of playerData) {
+                          if(user.name === undefined) {
+                            return res.status(200).json({
+                              success: false,
+                              message: 'Library Id " ' +user.libId +' " is wrong'
+                            });
+                            break;
+                          }
+                          else{
+                            if(user.year != Isgirl.year){
+                              return res.status(200).json({
+                                success: false,
+                                message: 'Library Id " ' +user.libId +' " is from another Year'
+                              });
+                              break;
+                            }
+                          }
+                        }
 
-                  if(game.type === 'team' && Isgirl.gender === 'FEMALE') {
-
-                    // Can be change if not working
-
-                    for(let user of playerData) {
-                      if(user.name === undefined) {
-                        return res.status(200).json({
-                          success: false,
-                          message: 'Library Id " ' +user.libId +' " is wrong'
-                        });
-                        break;
-                      }
-                      else{
-                        if(user.year != Isgirl.year){
-                          return res.status(200).json({
-                            success: false,
-                            message: 'Library Id " ' +user.libId +' " is from another Year'
+                        if(playerData.length >= 11 && playerData.length <= 14) {
+                          Captain.updateOne({_id: req.userData.userId, game: req.userData.game}, {
+                            $set: {
+                              team: playerData
+                            }
+                          }, (errors,update) => {
+                            if(errors){
+                              console.log(errors);
+                              // throw errors;
+                            }
+                            else{
+                              return res.status(200).json({
+                                success: true,
+                                type: 'team',
+                                message: 'Team has been added successfully'
+                              });
+                            }
                           });
-                          break;
-                        }
-                      }
-                    }
-
-                    if(playerData.length >= 11 && playerData.length <= 14) {
-                      Captain.updateOne({_id: req.userData.userId, game: req.userData.game}, {
-                        $set: {
-                          team: playerData
-                        }
-                      }, (errors,update) => {
-                        if(errors){
-                          console.log(errors);
-                          // throw errors;
                         }
                         else{
                           return res.status(200).json({
-                            success: true,
-                            type: 'team',
-                            message: 'Team has been added successfully'
-                          });
-                        }
-                      });
-                    }
-                    else{
-                      return res.status(200).json({
-                        success: false,
-                        message: 'Member should be between 11 to 14'
-                      });
-                    }
-
-                    // for(let user of playerData) {
-                    //   total.push(1);
-                    //   console.log(user.name);
-                    //   if(user.name === undefined) {
-                    //     console.log('done');
-                    //     console.log('breack');
-                    //     return res.status(200).json({
-                    //       success: false,
-                    //       message: 'Library Id " ' +user.libId +' " is wrong'
-                    //     });
-                    //     break;
-                    //   }
-                    //   else{
-                    //     if(user.year != Isgirl.year) {
-                    //       return res.status(200).json({
-                    //         success: false,
-                    //         message: 'Library Id " ' +user.libId +' " is from another Year'
-                    //       });
-                    //       break;
-                    //     }
-                    //     else{
-                    //       console.log('reaches');
-                    //       if(total.length == playerData.length) {
-                    //         if(playerData.length >= 11 && playerData.length <= 14 ) {
-                    //           Captain.updateOne({_id: req.userData.userId, game: req.userData.game}, {
-                    //             $set: {
-                    //               team: playerData
-                    //             }
-                    //           }, (errors,update) => {
-                    //             if(errors){
-                    //               console.log(errors);
-                    //               throw errors;
-                    //             }
-                    //             else{
-                    //               return res.status(200).json({
-                    //                 success: true,
-                    //                 type: 'team',
-                    //                 message: 'Team has been added successfully'
-                    //               });
-                    //             }
-                    //           });
-                    //         }
-                    //         else{
-                    //           return res.status(200).json({
-                    //             success: false,
-                    //             message: 'Member should be between 11 to 14'
-                    //           });
-                    //         }
-                    //       }
-                    //     }
-                    //   }
-                    // }
-
-
-
-                  }
-
-                  else{
-
-                    if(game.type === 'team'  && Isgirl.gender === 'MALE') {
-
-                      for(let user of playerData) {
-                        if(user.branch !== req.userData.branch) {
-                          return res.status(200).json({
                             success: false,
-                            message: 'Library Id " ' +user.libId +' " is from another branch'
+                            message: 'Member should be between 11 to 14'
                           });
-                          break;
                         }
+
+                        // for(let user of playerData) {
+                        //   total.push(1);
+                        //   console.log(user.name);
+                        //   if(user.name === undefined) {
+                        //     console.log('done');
+                        //     console.log('breack');
+                        //     return res.status(200).json({
+                        //       success: false,
+                        //       message: 'Library Id " ' +user.libId +' " is wrong'
+                        //     });
+                        //     break;
+                        //   }
+                        //   else{
+                        //     if(user.year != Isgirl.year) {
+                        //       return res.status(200).json({
+                        //         success: false,
+                        //         message: 'Library Id " ' +user.libId +' " is from another Year'
+                        //       });
+                        //       break;
+                        //     }
+                        //     else{
+                        //       console.log('reaches');
+                        //       if(total.length == playerData.length) {
+                        //         if(playerData.length >= 11 && playerData.length <= 14 ) {
+                        //           Captain.updateOne({_id: req.userData.userId, game: req.userData.game}, {
+                        //             $set: {
+                        //               team: playerData
+                        //             }
+                        //           }, (errors,update) => {
+                        //             if(errors){
+                        //               console.log(errors);
+                        //               throw errors;
+                        //             }
+                        //             else{
+                        //               return res.status(200).json({
+                        //                 success: true,
+                        //                 type: 'team',
+                        //                 message: 'Team has been added successfully'
+                        //               });
+                        //             }
+                        //           });
+                        //         }
+                        //         else{
+                        //           return res.status(200).json({
+                        //             success: false,
+                        //             message: 'Member should be between 11 to 14'
+                        //           });
+                        //         }
+                        //       }
+                        //     }
+                        //   }
+                        // }
+
+
+
                       }
 
+                      else{
 
-                      if(game.max_player-1 >= req.body.itemRows.length && game.min_player-1 <= req.body.itemRows.length) {
-                        playerData.forEach(players => {
-                          year.push(players.year);
-                        });
-                        const counts = {};
-                        for (let i = 0; i < year.length; i++) {
-                          let num = year[i];
-                          counts[num] = counts[num] ? counts[num] + 1 : 1;
-                        }
+                        if(game.type === 'team'  && Isgirl.gender === 'MALE') {
 
-                        if ((counts['4'] <= game.max_player_year-1) && (counts['3'] <= game.max_player_year) && (counts['2'] <= game.max_player_year)) {
-                          const array = [];
+                          for(let user of playerData) {
+                            if(user.branch !== req.userData.branch) {
+                              return res.status(200).json({
+                                success: false,
+                                message: 'Library Id " ' +user.libId +' " is from another branch'
+                              });
+                              break;
+                            }
+                          }
 
 
-                          for(let user of playerData){
-                            // get user.libId
-                            async.parallel({
-                              capt: (callback) => {
-                                Captain.find({libId: user.libId, type: 'team'}, (err, captain) => {
-                                  callback(null, captain.length);
-                                });
-                              },
-                              team: (callback) => {
-                                Captain.find({'team.libId': user.libId, type: 'team'})
-                                  .then(member => {
-                                    callback(null, member.length);
-                                  });
-                              }
-                            }, (err, results) => {
-                              const total = results.capt + results.team;
-                              if (total > 1) {
-                                return res.status(200).json({
-                                  success: false,
-                                  message: 'Library ID ' + user.libId + ' has already  been registered in two teams'
-                                });
-                              }
-                              else {
-                                array.push(results);
+                          if(game.max_player-1 >= req.body.itemRows.length && game.min_player-1 <= req.body.itemRows.length) {
+                            playerData.forEach(players => {
+                              year.push(players.year);
+                            });
+                            const counts = {};
+                            for (let i = 0; i < year.length; i++) {
+                              let num = year[i];
+                              counts[num] = counts[num] ? counts[num] + 1 : 1;
+                            }
 
-                                if (array.length === player.length) {
-                                  Captain.updateOne({_id: req.userData.userId, game: req.userData.game}, {
-                                    $set: {
-                                      team: playerData
-                                    }
-                                  }, (errors,update) => {
-                                    if(errors){
-                                      console.log(errors);
-                                      // throw errors;
-                                    }
-                                    else{
-                                      return res.status(200).json({
-                                        success: true,
-                                        type: 'team',
-                                        message: 'Team has been added successfully'
+                            if ((counts[year4] <= game.max_player_year-1) && (counts[year3] <= game.max_player_year) && (counts[year2] <= game.max_player_year)) {
+                              const array = [];
+
+
+                              for(let user of playerData){
+                                // get user.libId
+                                async.parallel({
+                                  capt: (callback) => {
+                                    Captain.find({libId: user.libId, type: 'team'}, (err, captain) => {
+                                      callback(null, captain.length);
+                                    });
+                                  },
+                                  team: (callback) => {
+                                    Captain.find({'team.libId': user.libId, type: 'team'})
+                                      .then(member => {
+                                        callback(null, member.length);
+                                      });
+                                  }
+                                }, (err, results) => {
+                                  const total = results.capt + results.team;
+                                  if (total > 1) {
+                                    return res.status(200).json({
+                                      success: false,
+                                      message: 'Library ID ' + user.libId + ' has already  been registered in two teams'
+                                    });
+                                  }
+                                  else {
+                                    array.push(results);
+
+                                    if (array.length === player.length) {
+                                      Captain.updateOne({_id: req.userData.userId, game: req.userData.game}, {
+                                        $set: {
+                                          team: playerData
+                                        }
+                                      }, (errors,update) => {
+                                        if(errors){
+                                          console.log(errors);
+                                          // throw errors;
+                                        }
+                                        else{
+                                          return res.status(200).json({
+                                            success: true,
+                                            type: 'team',
+                                            message: 'Team has been added successfully'
+                                          });
+                                        }
                                       });
                                     }
-                                  });
-                                }
+                                  }
+                                });
                               }
+                            }
+                            else {
+                              res.status(200).json({
+                                success: false,
+                                message: 'Max number of player from same year should not more that ' + game.max_player_year+ ' OR must contains from every year'
+                              });
+                            }
+                          }
+                          else{
+                            const min = game.min_player-1;
+                            const max = game.max_player-1;
+
+                            res.status(200).json({
+                              success: false,
+                              message: 'Team member should be between ' + min +' to ' + max
                             });
                           }
                         }
-                        else {
-                          res.status(200).json({
-                            success: false,
-                            message: 'Max number of player from same year should not more that ' + game.max_player_year+ ' OR must contains from every year'
-                          });
-                        }
-                      }
-                      else{
-                        const min = game.min_player-1;
-                        const max = game.max_player-1;
 
-                        res.status(200).json({
-                          success: false,
-                          message: 'Team member should be between ' + min +' to ' + max
-                        });
-                      }
-                    }
-
-                    else{
-                      Captain.updateOne({_id: req.userData.userId, game: req.userData.game}, {
-                        $set: {
-                          team: playerData
-                        }
-                      }, (errors,update) => {
-                        if(errors){
-                          console.log(errors);
-                          // throw errors;
-                        }
                         else{
-                          return res.status(200).json({
-                            id: req.userData.userId,
-                            success: true,
-                            type: 'individual',
-                            message: 'Team has been added successfully'
+                          Captain.updateOne({_id: req.userData.userId, game: req.userData.game}, {
+                            $set: {
+                              team: playerData
+                            }
+                          }, (errors,update) => {
+                            if(errors){
+                              console.log(errors);
+                              // throw errors;
+                            }
+                            else{
+                              return res.status(200).json({
+                                id: req.userData.userId,
+                                success: true,
+                                type: 'individual',
+                                message: 'Team has been added successfully'
+                              });
+                            }
                           });
                         }
-                      });
-                    }
 
-                  }
+                      }
+                    });
+
+                })
+                .catch(err => {
+                  console.log(err);
+                  // throw err;
                 });
 
             })
-            .catch(err => {
-              console.log(err);
-              // throw err;
+            .catch(error => {
+              console.log(error);
+              // throw new error
             });
+        }
+      }
+    })
+    .catch(error => {
+      console.log(error);
+    });
 
-        })
-        .catch(error => {
-          console.log(error);
-          // throw new error
-        });
-    }
-  }
 });
 
 router.get('/keys', checkAuth, (req,res) => {
