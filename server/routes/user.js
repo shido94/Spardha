@@ -143,12 +143,12 @@ router.post('/register', (req,res) => {
 
 router.post('/member', checkAuth , (req,res) => {
   const player = req.body.itemRows;
-  console.log('player -- >', req.userData);
   Captain.findOne({libId: req.userData.libId})
     .then(findYear => {
       const year4 = findYear.year;
       const year3 = year4-1;
       const year2 = year3-1;
+
       let year = [];
       let ID = [];
 
