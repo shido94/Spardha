@@ -531,7 +531,8 @@ router.get('/keys', checkAuth, (req,res) => {
 
 router.post('/add-captain', (req,res) => {
   const capt = req.body.value;
-  AddCaptain.findOne({libId: capt.libId})
+  console.log(req.body);
+  AddCaptain.findOne({libId: capt.libId, game: capt.game})
     .then(result => {
       if(result) {
         AddCaptain.updateOne({libId: capt.libId}, {
