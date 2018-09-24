@@ -105,12 +105,12 @@ p{
 }
 
 
-.button:hover {
-  background-color: #dc3545;
-  box-shadow: 0 5px 5px;
-  color: #ffffff;
-  transform: translateY(-2px);
-}
+/*.button:hover {*/
+  /*background-color: #dc3545;*/
+  /*box-shadow: 0 5px 5px;*/
+  /*color: #ffffff;*/
+  /*transform: translateY(-2px);*/
+/*}*/
 
 img{
   width: 400px;
