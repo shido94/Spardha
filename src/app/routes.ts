@@ -25,18 +25,18 @@ export const myRoutes: Routes = [
     path: '',
     component: HomeComponent
   },
-  {
-    path: 'type',
-    component: DivideComponent
-  },
-  {
-    path: 'type/team',
-    component: TeamComponent
-  },
-  {
-    path: 'type/individual',
-    component: IndividualComponent
-  },
+  // {
+  //   path: 'type',
+  //   component: DivideComponent
+  // },
+  // {
+  //   path: 'type/team',
+  //   component: TeamComponent
+  // },
+  // {
+  //   path: 'type/individual',
+  //   component: IndividualComponent
+  // },
   {
     path: 'event',
     component: EventComponent
